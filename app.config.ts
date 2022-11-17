@@ -23,8 +23,10 @@ const config : ExpoConfig = {
       adaptiveIcon: {
         foregroundImage: "./src/assets/adaptive-icon.png",
         backgroundColor: "#FFFFFF",
+        
       },
     },
+    
     web: {
       favicon: "./src/assets/favicon.png",
     },
