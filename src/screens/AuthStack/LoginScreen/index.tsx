@@ -1,13 +1,14 @@
 import { Entypo } from '@expo/vector-icons';
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import LoginForm from '../../../components/AuthScreenElements/LoginForm';
 
 const LoginScreen = () => {
   return (
     <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
         <Text style={styles.title}>Log In</Text>
-        {/* <LoginForm /> */}
+        <LoginForm />
       </View>
     </SafeAreaView>
   );
