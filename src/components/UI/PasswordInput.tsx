@@ -5,10 +5,10 @@ import { Text, TextInput, View, ViewProps } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import t from "../../theme";
 import {
-  focusPasswordInputStyles,
+  focusInputStyle,
   inputErrorStyle,
   labelStyle,
-  passwordInputStyles,
+  inputStyles,
 } from "./styles";
 
 interface ICustomPasswordInputProps {
@@ -45,8 +45,8 @@ export const PasswordInput = (props: ICustomPasswordInputProps) => {
           <View
             style={[
               isFocused
-                ? (focusPasswordInputStyles as ViewProps)
-                : (passwordInputStyles as ViewProps),
+                ? (focusInputStyle as ViewProps)
+                : (inputStyles as ViewProps),
               t.flexRow,
               t.itemsCenter,
               errors.password && inputErrorStyle,

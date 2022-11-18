@@ -1,9 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Button, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View , Text} from "react-native";
 import * as yup from "yup";
+import { IUser } from "../../interfaces";
 import t from "../../theme";
+import { GRAY, WHITE } from "../../theme/colors";
 import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
 
@@ -22,19 +24,12 @@ const LoginForm = () => {
     },
     resolver: yupResolver(schema),
   });
-  const { handleSubmit } = method;
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    handleSubmit,
+    formState: { isDirty },
+  } = method;
 
-  const handleRegister = async (data) => {
-    try {
-      setIsLoading(true);
-      const { email, password } = data;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleLogin = async (data: IUser) => {};
 
   return (
     <FormProvider {...method}>
@@ -48,15 +43,42 @@ const LoginForm = () => {
       <PasswordInput
         name="password"
         placeholder="Your password"
-        label="Create a password"
+        label="Enter your password"
       />
-      <View style={[t.flex1]} />
 
-      <View style={[t.mB2, t.itemsEnd]}>
-        <Button title="Log In" onPress={handleSubmit(handleRegister)} />
-      </View>
+      <TouchableOpacity
+        style={[
+          styles.submitButton,
+          isDirty ? styles.activeButton : styles.disabledSubmitButton,
+        ]}
+        onPress={handleSubmit(handleLogin)}
+      >
+        <Text style={styles.submitText}>Login</Text>
+      </TouchableOpacity>
     </FormProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  submitButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "stretch",
+    height: 36,
+    borderRadius: 4,
+    marginTop: 40,
+  },
+  activeButton: {
+    backgroundColor: 'purple',
+  },
+  disabledSubmitButton: {
+    backgroundColor: GRAY,
+  },
+  submitText: {
+    color: "white",
+    textTransform: "uppercase",
+    fontWeight: "700",
+  },
+});
 
 export default LoginForm;

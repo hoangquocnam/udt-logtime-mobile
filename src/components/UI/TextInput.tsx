@@ -56,7 +56,11 @@ export const NormalTextInput = (props: CustomTextInputProps) => {
           );
         }}
       />
-      {get(errors, name) && <Text>{get(errors, name)?.message as String}</Text>}
+      {get(errors, name) ? (
+        <Text style={errorStyle as TextProps}>
+          {get(errors, name)?.message as String}
+        </Text>
+      ) : null}
     </>
   );
 };
