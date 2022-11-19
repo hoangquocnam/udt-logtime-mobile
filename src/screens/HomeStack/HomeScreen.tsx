@@ -31,15 +31,14 @@ function HomeScreen() {
 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        <FlatList
-          data={users}
-          renderItem={renderUserItem}
-          keyExtractor={(user) => user?.login?.uuid}
-          onRefresh={fetchData}
-          refreshing={status !== EApiState.IDLE}
-        />
-      </View>
+      <FlatList
+        contentContainerStyle={styles.container}
+        data={users}
+        renderItem={renderUserItem}
+        keyExtractor={(user) => user?.login?.uuid}
+        onRefresh={fetchData}
+        refreshing={status !== EApiState.IDLE}
+      />
     </SafeAreaView>
   );
 }

@@ -1,9 +1,7 @@
 import * as React from "react";
 import { View, Text, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import AntDesignIcon from "react-native-vector-icons/AntDesign";
-import { Avatar } from "react-native-paper";
+import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 import { PRIMARY } from "../../../theme/colors";
 import { IUser } from "../../../interfaces";
@@ -28,30 +26,32 @@ function UserCard({ user }: IUserCardProps) {
   }
 
   return (
-    <View style={[t.relative, t.flexRow, t.itemsCenter, styles.container]}>
-      <Image
-        style={styles.avatar}
-        source={{
-          uri: picture?.thumbnail,
-        }}
-      />
-      <View style={styles.contentContainer}>
-        <Text style={[t.fontSansBold, styles.fullName]}>{fullName}</Text>
-        <View style={styles.addressInfo}>
-          <AntDesignIcon name="enviroment" color={"gray"} size={14} />
-          <Text style={styles.address} numberOfLines={1}>
-            {address}
-          </Text>
-        </View>
-      </View>
-      <TouchableOpacity onPress={handleToggleFavorite}>
-        <Ionicons
-          name={`star${!isFavorite ? "-outline" : ""}`}
-          size={20}
-          color={PRIMARY}
+    <TouchableOpacity>
+      <View style={[t.relative, t.flexRow, t.itemsCenter, styles.container]}>
+        <Image
+          style={styles.avatar}
+          source={{
+            uri: picture?.thumbnail,
+          }}
         />
-      </TouchableOpacity>
-    </View>
+        <View style={styles.contentContainer}>
+          <Text style={[t.fontSansBold, styles.fullName]}>{fullName}</Text>
+          <View style={[styles.addressInfo, t.mT2]}>
+            <Ionicons name="earth" size={24} color={PRIMARY} />
+            <Text style={[styles.address]} numberOfLines={1}>
+              {address}
+            </Text>
+          </View>
+        </View>
+        <TouchableOpacity onPress={handleToggleFavorite}>
+          <MaterialIcons
+            name={`favorite${!isFavorite ? "-border" : ""}`}
+            size={24}
+            color={PRIMARY}
+          />
+        </TouchableOpacity>
+      </View>
+    </TouchableOpacity>
   );
 }
 
