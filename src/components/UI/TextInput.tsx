@@ -52,6 +52,8 @@ export const NormalTextInput = (props: CustomTextInputProps) => {
                 isFocused ? focusInputStyle : inputStyles,
                 errors[name] && inputErrorStyle,
               ]}
+              autoCapitalize="none"
+              autoComplete="off"
             />
           );
         }}

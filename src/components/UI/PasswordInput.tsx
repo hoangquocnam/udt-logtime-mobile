@@ -1,9 +1,10 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Text, TextInput, View, ViewProps } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import t from "../../theme";
+import { PRIMARY } from "../../theme/colors";
 import {
   focusInputStyle,
   inputErrorStyle,
@@ -71,7 +72,7 @@ export const PasswordInput = (props: ICustomPasswordInputProps) => {
               <Ionicons
                 name={isShowPassword ? "eye" : "eye-off"}
                 size={24}
-                color={"red"}
+                color={PRIMARY}
               />
             </TouchableOpacity>
           </View>

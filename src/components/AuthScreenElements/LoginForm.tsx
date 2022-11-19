@@ -1,13 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { StyleSheet, TouchableOpacity, View , Text} from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import * as yup from "yup";
-import { IUser } from "../../interfaces";
+import { IUserLogin } from "../../interfaces";
 import t from "../../theme";
-import { GRAY, WHITE } from "../../theme/colors";
+import { GRAY } from "../../theme/colors";
 import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
+import Router from "../../navigation/router";
+import { MOCK_ACCOUNT } from "../../constants";
 
 const schema = yup
   .object({
@@ -17,6 +20,7 @@ const schema = yup
   .required();
 
 const LoginForm = () => {
+  const navigation = useNavigation();
   const method = useForm({
     defaultValues: {
       email: "",
@@ -26,10 +30,19 @@ const LoginForm = () => {
   });
   const {
     handleSubmit,
-    formState: { isDirty },
+    reset,
+    formState: { isDirty, errors },
   } = method;
 
-  const handleLogin = async (data: IUser) => {};
+  const handleLogin = async (data: IUserLogin) => {
+    if (
+      data.email === MOCK_ACCOUNT.email &&
+      data.password === MOCK_ACCOUNT.password
+    ) {
+      reset();
+      navigation.navigate(Router.Main.value);
+    }
+  };
 
   return (
     <FormProvider {...method}>
@@ -49,7 +62,7 @@ const LoginForm = () => {
       <TouchableOpacity
         style={[
           styles.submitButton,
-          isDirty ? styles.activeButton : styles.disabledSubmitButton,
+          isDirty || !errors ? styles.activeButton : styles.disabledSubmitButton,
         ]}
         onPress={handleSubmit(handleLogin)}
       >
@@ -69,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   activeButton: {
-    backgroundColor: 'purple',
+    backgroundColor: "purple",
   },
   disabledSubmitButton: {
     backgroundColor: GRAY,
