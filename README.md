@@ -33,4 +33,4 @@ expo start
 ```
 
 ## Link video demo
-
+https://www.loom.com/share/005a607033e44684916d080107eff92b
