@@ -11,6 +11,7 @@ import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
 import Router from "../../navigation/router";
 import { MOCK_ACCOUNT } from "../../constants";
+import useToast from "../../hooks/useToast";
 
 const schema = yup
   .object({
@@ -21,6 +22,7 @@ const schema = yup
 
 const LoginForm = () => {
   const navigation = useNavigation();
+  const { show } = useToast();
   const method = useForm({
     defaultValues: {
       email: "",
@@ -41,6 +43,8 @@ const LoginForm = () => {
     ) {
       reset();
       navigation.navigate(Router.Main.value);
+    } else {
+      show({ message: "Invalid email or password" });
     }
   };
 
@@ -62,7 +66,9 @@ const LoginForm = () => {
       <TouchableOpacity
         style={[
           styles.submitButton,
-          isDirty || !errors ? styles.activeButton : styles.disabledSubmitButton,
+          isDirty || !errors
+            ? styles.activeButton
+            : styles.disabledSubmitButton,
         ]}
         onPress={handleSubmit(handleLogin)}
       >
