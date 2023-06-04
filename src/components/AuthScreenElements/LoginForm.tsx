@@ -2,16 +2,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import * as yup from "yup";
-import { IUserLogin } from "../../interfaces";
 import t from "../../theme";
-import { GRAY } from "../../theme/colors";
+import { ERROR, GRAY } from "../../theme/colors";
 import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
-import Router from "../../navigation/router";
-import { MOCK_ACCOUNT } from "../../constants";
 import useToast from "../../hooks/useToast";
+import { IUserLogin } from "../../interfaces/user";
+import { usePostLogin } from "../../api/user";
 
 const schema = yup
   .object({
@@ -21,7 +26,11 @@ const schema = yup
   .required();
 
 const LoginForm = () => {
-  const navigation = useNavigation();
+  const { data, mutateAsync, isLoading, error } = usePostLogin({
+    onError: (error: Error) => {
+      show({ message: error.message, color: ERROR });
+    },
+  });
   const { show } = useToast();
   const method = useForm({
     defaultValues: {
@@ -29,22 +38,18 @@ const LoginForm = () => {
       password: "",
     },
     resolver: yupResolver(schema),
+    reValidateMode: "onChange",
+    mode: "all",
   });
   const {
     handleSubmit,
-    reset,
-    formState: { isDirty, errors },
+    formState: { isDirty },
   } = method;
 
-  const handleLogin = async (data: IUserLogin) => {
-    if (
-      data.email === MOCK_ACCOUNT.email &&
-      data.password === MOCK_ACCOUNT.password
-    ) {
-      reset();
-      navigation.navigate(Router.Main.value);
-    } else {
-      show({ message: "Invalid email or password" });
+  const handleLogin = async (payload: IUserLogin) => {
+    await mutateAsync(payload);
+    if (data?.user) {
+      show({ message: "Login success!" });
     }
   };
 
@@ -61,18 +66,21 @@ const LoginForm = () => {
         name="password"
         placeholder="Your password"
         label="Enter your password"
+        
       />
 
       <TouchableOpacity
         style={[
           styles.submitButton,
-          isDirty || !errors
-            ? styles.activeButton
-            : styles.disabledSubmitButton,
+          isDirty ? styles.activeButton : styles.disabledSubmitButton,
         ]}
         onPress={handleSubmit(handleLogin)}
       >
-        <Text style={styles.submitText}>Login</Text>
+        {isLoading ? (
+          <ActivityIndicator size="small" color="white" />
+        ) : (
+          <Text style={styles.submitText}>Login</Text>
+        )}
       </TouchableOpacity>
     </FormProvider>
   );

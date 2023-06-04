@@ -1,11 +1,6 @@
 import { EApiState } from "../enums";
 
-export interface IUserLogin {
-  email: string;
-  password: string;
-}
-
-export interface IUser {
+export interface IStrangerUser {
   name: {
     first: string;
     last: string;
@@ -19,7 +14,7 @@ export interface IUser {
   isFavorite?: boolean;
 }
 
-export interface IUserState {
-  value: IUser[];
+export interface IStrangerUserState {
+  value: IStrangerUser[];
   status?: EApiState;
 }

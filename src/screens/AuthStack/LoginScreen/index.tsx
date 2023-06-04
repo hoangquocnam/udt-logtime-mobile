@@ -1,11 +1,11 @@
-import { Entypo } from '@expo/vector-icons';
-import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import LoginForm from '../../../components/AuthScreenElements/LoginForm';
+import { Entypo } from "@expo/vector-icons";
+import React from "react";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import LoginForm from "../../../components/AuthScreenElements/LoginForm";
 
 const LoginScreen = () => {
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Text style={styles.title}>Log In</Text>
         <LoginForm />
@@ -17,21 +17,21 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     paddingVertical: 33,
     paddingHorizontal: 22,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   title: {
     fontSize: 24,
     marginBottom: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
 export const screenOptions = (navData) => {
   return {
-    title: '',
+    title: "",
     headerShown: true,
     headerStyle: {
       shadowRadius: 0,
@@ -40,7 +40,14 @@ export const screenOptions = (navData) => {
       },
     },
     headerBackTitleVisible: false,
-    headerBackImage: () => <Entypo style={{ marginLeft: 22 }} name={'chevron-left'} size={22} color={'#000'} />,
+    headerBackImage: () => (
+      <Entypo
+        style={{ marginLeft: 22 }}
+        name={"chevron-left"}
+        size={22}
+        color={"#000"}
+      />
+    ),
   };
 };
 

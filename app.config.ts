@@ -1,35 +1,35 @@
-import { ExpoConfig } from 'expo/config';
+import { ExpoConfig } from "expo/config";
 
-
-const config : ExpoConfig = {
-    name: "JetDevs-Mobile-App",
-    slug: "jetdevs-mobile-app",
-    version: "1.0.0",
-    orientation: "portrait",
-    icon: "./src/assets/icon.png",
-    splash: {
-      image: "./src/assets/splash.png",
-      resizeMode: "contain",
-      backgroundColor: "#ffffff",
+const config: ExpoConfig = {
+  name: "Mobile UDT TimeSheet",
+  slug: "mobile-udt-timesheet",
+  version: "1.0.0",
+  orientation: "portrait",
+  icon: "./src/assets/icon.png",
+  splash: {
+    image: "./src/assets/splash.png",
+    resizeMode: "contain",
+    backgroundColor: "#ffffff",
+  },
+  updates: {
+    fallbackToCacheTimeout: 0,
+  },
+  assetBundlePatterns: ["**/*"],
+  ios: {
+    supportsTablet: true,
+  },
+  android: {
+    adaptiveIcon: {
+      foregroundImage: "./src/assets/adaptive-icon.png",
+      backgroundColor: "#FFFFFF",
     },
-    updates: {
-      fallbackToCacheTimeout: 0,
-    },
-    assetBundlePatterns: ["**/*"],
-    ios: {
-      supportsTablet: true,
-    },
-    android: {
-      adaptiveIcon: {
-        foregroundImage: "./src/assets/adaptive-icon.png",
-        backgroundColor: "#FFFFFF",
-        
-      },
-    },
-    
-    web: {
-      favicon: "./src/assets/favicon.png",
-    },
+  },
+  web: {
+    favicon: "./src/assets/favicon.png",
+  },
+  extra: {
+    API_URL: process.env.API_URL,
+  },
 };
 
 export default config;

@@ -8,13 +8,12 @@ import LoginScreen from "../screens/AuthStack/LoginScreen";
 import HomeScreen from "../screens/HomeStack/HomeScreen";
 import { PRIMARY } from "../theme/colors";
 import t from "../theme";
-import FavoriteScreen from "../screens/HomeStack/FavoriteScreen";
 
 const AppStackNavigator = createStackNavigator();
 const BottomTabNavigator = createBottomTabNavigator();
 
 const MainNavigation = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const handleLogout = () => {
     navigation.navigate(Router.Login);
@@ -39,7 +38,7 @@ const MainNavigation = () => {
                   t.alignCenter,
                   {
                     fontSize: 20,
-                    color: PRIMARY
+                    color: PRIMARY,
                   },
                 ]}
               >
@@ -74,10 +73,6 @@ const MainNavigation = () => {
       <BottomTabNavigator.Screen
         name={Router.Main.Home}
         component={HomeScreen}
-      />
-      <BottomTabNavigator.Screen
-        name={Router.Main.Favorites}
-        component={FavoriteScreen}
       />
     </BottomTabNavigator.Navigator>
   );

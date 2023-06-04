@@ -22,7 +22,11 @@ export interface IToastContext {
   hide: () => void;
 }
 
-export const ToastContext = createContext<IToastContext>();
+export const ToastContext = createContext<IToastContext>({
+  toast: initialToast,
+  show: () => {},
+  hide: () => {},
+});
 
 export const ToastProvider = ({ children }) => {
   const [toast, setToast] = useState<IToast>(initialToast);
