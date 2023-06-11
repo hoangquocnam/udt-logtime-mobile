@@ -1,42 +1,73 @@
-import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useEffect } from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ProjectDetail } from "../../../interfaces/project";
-import { getImageUrl } from "../../../utils";
+import { formatCash, getImageUrl } from "../../../utils";
 import { useGetReportProject } from "../../../api/report";
+import { format } from "date-fns";
+import {
+  DARK_GRAY,
+  LIGHT_GREEN,
+  LIGHT_YELLOW,
+  SUCCESS,
+  WARNING,
+} from "../../../theme/colors";
 
 const ProjectListItem = ({ item }: { item: ProjectDetail }) => {
-  // const { data, error } = useGetReportProject({
-  //   project: item?._id,
-  //   period: "month",
-  //   date: "2023-06-09",
-  // });
+  const { mutateAsync, data: dataReportProject } = useGetReportProject();
+
+  useEffect(() => {
+    mutateAsync({
+      project: item?._id,
+      period: "month",
+      date: format(new Date(), "yyyy-MM-dd"),
+    });
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.logoContainer]}>
-        <Image
-          source={{ uri: getImageUrl(item?.logo) }}
-          style={[styles.logoStyle]}
-        />
+    <TouchableOpacity>
+      <View style={[styles.container]}>
+        <View style={[styles.logoContainer]}>
+          <Image
+            source={{ uri: getImageUrl(item?.logo) }}
+            style={[styles.logoStyle]}
+          />
+        </View>
+        <View style={[styles?.listContainer]}>
+          <View style={styles.itemContainer}>
+            <Text style={[styles.headerText]}>{"ID:"}</Text>
+            <Text style={styles.valueText}>{item?._id}</Text>
+          </View>
+
+          <View style={styles.itemContainer}>
+            <Text style={[styles.headerText]}>{"Name:"}</Text>
+            <Text style={styles.valueText}>{item?.name}</Text>
+          </View>
+
+          <View style={styles.itemContainer}>
+            <Text style={[styles.headerText]}>{"Payment period"}</Text>
+            <Text style={styles.valueText}>{item?.paymentPeriod}</Text>
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={[styles.itemContainer, styles.timeContainer]}>
+            <Text style={[styles.headerText]}>{"Total working time"}</Text>
+            <Text style={[styles.valueText, styles.timeText]}>
+              {dataReportProject?.reportDetail?.totalWorkingTime ?? 0}
+            </Text>
+          </View>
+
+          <View style={styles.divider} />
+
+          <View style={[styles.itemContainer, styles.priceContainer]}>
+            <Text style={[styles.headerText]}>{"Total salary"}</Text>
+            <Text style={[styles.valueText, styles.priceText]}>
+              {formatCash(dataReportProject?.reportDetail?.totalSalary ?? 0)}
+            </Text>
+          </View>
+        </View>
       </View>
-
-      <View style={[styles?.listContainer]}>
-        <View style={styles.itemContainer}>
-          <Text style={[styles.headerText]}>{"ID:"}</Text>
-          <Text style={styles.valueText}>{item?._id}</Text>
-        </View>
-
-        <View style={styles.itemContainer}>
-          <Text style={[styles.headerText]}>{"Name:"}</Text>
-          <Text style={styles.valueText}>{item?.name}</Text>
-        </View>
-
-        <View style={styles.itemContainer}>
-          <Text style={[styles.headerText]}>{"Payment period"}</Text>
-          <Text style={styles.valueText}>{item?.paymentPeriod}</Text>
-        </View>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -45,8 +76,8 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
-    borderWidth: 1,
-    flex: 1,
+    borderWidth: 2,
+    borderColor: DARK_GRAY,
   },
   itemContainer: {
     marginBottom: 10,
@@ -68,8 +99,33 @@ const styles = StyleSheet.create({
   listContainer: {
     justifyContent: "space-between",
   },
-
   reportContainer: {},
+  priceContainer: {
+    backgroundColor: LIGHT_GREEN,
+    padding: 10,
+    borderRadius: 10,
+  },
+  priceText: {
+    color: SUCCESS,
+    fontWeight: "600",
+    fontSize: 18,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: DARK_GRAY,
+    width: "100%",
+    marginVertical: 10,
+  },
+  timeContainer: {
+    backgroundColor: LIGHT_YELLOW,
+    padding: 10,
+    borderRadius: 10,
+  },
+  timeText: {
+    color: WARNING,
+    fontWeight: "600",
+    fontSize: 18,
+  },
 });
 
 export default ProjectListItem;

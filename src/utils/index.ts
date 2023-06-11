@@ -16,3 +16,8 @@ export const getImageUrl = (image: string) => {
     ? `${COMPANY_URL}/images/${image}`
     : `https://via.placeholder.com/150`;
 };
+
+export const formatCash = (num: number) => {
+  // split by dot
+  return num.toLocaleString("it-IT", { style: "currency", currency: "VND" });
+};

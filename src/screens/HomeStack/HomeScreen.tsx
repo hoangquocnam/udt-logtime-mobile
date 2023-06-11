@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -7,12 +7,13 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  Text,
 } from "react-native";
 import { useGetProjects } from "../../api/projects";
 import { ProjectDetail } from "../../interfaces/project";
 import ProjectListItem from "../../components/HomeStackElements/Home/ProjectListItem";
-
-const SalaryReport = () => {};
+import TotalSalaryReport from "../../components/HomeStackElements/Home/TotalSalaryReport";
+import t from "../../theme";
 
 function HomeScreen() {
   const {
@@ -34,17 +35,33 @@ function HomeScreen() {
   }
 
   const ItemSeparator = () => {
-    return <View style={{ height: 10 }} />;
+    return <View style={[t.h5]} />;
   };
 
   return (
     <ScrollView style={styles.container}>
-      <FlatList
-        data={dataProjects?.projects}
-        renderItem={renderItem}
-        ItemSeparatorComponent={ItemSeparator}
-        style={{ flex: 1, height: "100%" }}
-      />
+      <View>
+        <View style={styles.itemContainer}>
+          <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
+            Total report
+          </Text>
+          <TotalSalaryReport projects={dataProjects?.projects} />
+        </View>
+
+        <View style={[t.h0_5, t.bgGray400, t.mY8]} />
+
+        <View>
+          <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
+            Projects
+          </Text>
+          <FlatList<ProjectDetail>
+            data={dataProjects?.projects}
+            renderItem={renderItem}
+            ItemSeparatorComponent={ItemSeparator}
+            style={{ flex: 1, height: "100%" }}
+          />
+        </View>
+      </View>
     </ScrollView>
   );
 }
@@ -55,11 +72,15 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     flex: 1,
+    height: "100%",
+    backgroundColor: "white",
   },
   loadingContainer: {
     alignItems: "center",
     height: "100%",
     justifyContent: "center",
   },
-  itemContainer: {},
+  itemContainer: {
+    justifyContent: "space-around",
+  },
 });

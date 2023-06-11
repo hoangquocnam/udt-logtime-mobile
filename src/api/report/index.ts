@@ -1,7 +1,6 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { router } from "../router";
 import { authHeader } from "..";
-import { ProjectDetail } from "../../interfaces/project";
 import { ReportDetail, TimeSheet } from "../../interfaces/report";
 
 type DataReportTimesheet = {
@@ -37,14 +36,8 @@ const getReportProject = async (
   return responseJson.data;
 };
 
-export const useGetReportProject = (body: BodyReportTimesheet) => {
-  return useQuery<DataReportTimesheet, Error>(
-    [router.projects.listOfUser.value],
-    () => getReportProject(body),
-    {
-      onError: (error) => {
-        console.error("useGetReportProject", error);
-      },
-    }
-  );
+export const useGetReportProject = () => {
+  return useMutation((body: BodyReportTimesheet) => getReportProject(body), {
+    mutationKey: ["report", "project"],
+  });
 };
