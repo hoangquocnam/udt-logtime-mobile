@@ -17,6 +17,7 @@ const config: ExpoConfig = {
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
+    bundleIdentifier: "com.udt.mobile.timesheet"
   },
   android: {
     adaptiveIcon: {
