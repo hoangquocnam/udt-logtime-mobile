@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import {
   StyleSheet,
@@ -16,7 +16,9 @@ import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
 import useToast from "../../hooks/useToast";
 import { IUserLogin } from "../../interfaces/user";
-import { usePostLogin } from "../../api/user";
+import { useMe, usePostLogin } from "../../api/auth";
+import Routes from "../../navigation/routes";
+import Storage from "../../store";
 
 const schema = yup
   .object({
@@ -26,11 +28,20 @@ const schema = yup
   .required();
 
 const LoginForm = () => {
-  const { data, mutateAsync, isLoading, error } = usePostLogin({
+  const navigation = useNavigation();
+  const {
+    data: dataLogin,
+    mutateAsync,
+    isLoading,
+    error,
+  } = usePostLogin({
     onError: (error: Error) => {
       show({ message: error.message, color: ERROR });
     },
   });
+  const storage = Storage.getInstance();
+
+  const { data: me, isLoading: isLoadingMe } = useMe();
   const { show } = useToast();
   const method = useForm({
     defaultValues: {
@@ -48,10 +59,37 @@ const LoginForm = () => {
 
   const handleLogin = async (payload: IUserLogin) => {
     await mutateAsync(payload);
-    if (data?.user) {
-      show({ message: "Login success!" });
-    }
   };
+
+  useEffect(() => {
+    const onLoginSuccess = async () => {
+      show({ message: "Login success!" });
+      await storage.setItem("email", dataLogin?.user?.email);
+      await storage.setItem("aToken", dataLogin?.user?.aToken);
+      await storage.setItem("rToken", dataLogin?.user?.rToken);
+      //@ts-ignore
+      navigation.navigate(Routes.Main.value);
+    };
+
+    if (dataLogin?.user) {
+      onLoginSuccess();
+    }
+  }, [dataLogin]);
+
+  useEffect(() => {
+    if (me) {
+      //@ts-ignore
+      navigation.navigate(Routes.Main.value);
+    }
+  }, [me]);
+
+  if (isLoading || isLoadingMe) {
+    return (
+      <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <FormProvider {...method}>
@@ -66,7 +104,6 @@ const LoginForm = () => {
         name="password"
         placeholder="Your password"
         label="Enter your password"
-        
       />
 
       <TouchableOpacity

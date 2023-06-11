@@ -3,7 +3,7 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
-import Router from "./router";
+import Routes from "./routes";
 import LoginScreen from "../screens/AuthStack/LoginScreen";
 import HomeScreen from "../screens/HomeStack/HomeScreen";
 import { PRIMARY } from "../theme/colors";
@@ -16,7 +16,7 @@ const MainNavigation = () => {
   const navigation = useNavigation<any>();
 
   const handleLogout = () => {
-    navigation.navigate(Router.Login);
+    navigation.navigate(Routes.Login);
   };
 
   return (
@@ -48,9 +48,9 @@ const MainNavigation = () => {
           },
           tabBarIcon: ({ size, focused, color }) => {
             switch (route.name) {
-              case Router.Main.Home:
+              case Routes.Main.Home:
                 return <AntDesign name="home" size={size} color={color} />;
-              case Router.Main.Favorites:
+              case Routes.Main.Favorites:
                 return (
                   <MaterialIcons
                     name="favorite-border"
@@ -71,7 +71,7 @@ const MainNavigation = () => {
       }}
     >
       <BottomTabNavigator.Screen
-        name={Router.Main.Home}
+        name={Routes.Main.Home}
         component={HomeScreen}
       />
     </BottomTabNavigator.Navigator>
@@ -89,9 +89,9 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <AppStackNavigator.Navigator screenOptions={defaultNavOptions}>
-        <AppStackNavigator.Screen name={Router.Login} component={LoginScreen} />
+        <AppStackNavigator.Screen name={Routes.Login} component={LoginScreen} />
         <AppStackNavigator.Screen
-          name={Router.Main.value}
+          name={Routes.Main.value}
           component={MainNavigation}
         />
       </AppStackNavigator.Navigator>

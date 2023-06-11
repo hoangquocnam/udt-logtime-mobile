@@ -1,3 +1,5 @@
+import { COMPANY_URL } from "../api/router";
+
 export function getFullName(
   firstName?: string,
   lastName?: string,
@@ -8,3 +10,9 @@ export function getFullName(
 
   return nameArray.join(" ");
 }
+
+export const getImageUrl = (image: string) => {
+  return image
+    ? `${COMPANY_URL}/images/${image}`
+    : `https://via.placeholder.com/150`;
+};

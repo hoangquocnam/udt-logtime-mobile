@@ -1,9 +1,10 @@
 import useAuth from "../hooks/useAuth";
 
-const authHeader = () => {
+export const authHeader = async () => {
   const { getAccessToken, getRefreshToken } = useAuth();
   return {
-    Authorization: `Bearer ${getAccessToken()}`,
-    "x-refresh-token": getRefreshToken(),
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${await getRefreshToken()}`,
+    "x-refresh-token": await getRefreshToken(),
   };
 };

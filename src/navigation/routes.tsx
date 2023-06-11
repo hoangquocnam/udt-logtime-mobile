@@ -1,4 +1,4 @@
-const Router = {
+const Routes = {
   Main: {
     value: "Main",
     Home: "Home",
@@ -7,4 +7,4 @@ const Router = {
   Login: "Login",
 };
 
-export default Router;
+export default Routes;
