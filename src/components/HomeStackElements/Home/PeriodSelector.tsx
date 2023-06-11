@@ -1,6 +1,8 @@
 import SelectDropdown from "react-native-select-dropdown";
 import { DARK_GRAY, LIGHTER_GRAY, LIGHT_GREEN } from "../../../theme/colors";
 import { AntDesign } from "@expo/vector-icons";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { useState } from "react";
 
 type PeriodSelectorProps = {
   onChange: (value: string) => void;
@@ -8,12 +10,16 @@ type PeriodSelectorProps = {
 
 const PeriodSelector = (props: PeriodSelectorProps) => {
   const { onChange } = props;
+  const [currentPeriod, setCurrentPeriod] = useState("month");
   const periods = ["month", "day", "week"];
+
+  
   return (
     <SelectDropdown
       data={periods}
-      defaultValue={"month"}
+      defaultValue={currentPeriod}
       onSelect={(selectedItem, index) => {
+        setCurrentPeriod(selectedItem);
         onChange(selectedItem);
       }}
       buttonTextAfterSelection={(selectedItem, index) => {
@@ -39,6 +45,9 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
       }}
       rowStyle={{
         borderRadius: 12,
+      }}
+      rowTextStyle={{
+        textTransform: "capitalize",
       }}
       selectedRowStyle={{
         backgroundColor: LIGHT_GREEN,

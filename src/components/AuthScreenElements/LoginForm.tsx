@@ -67,7 +67,6 @@ const LoginForm = () => {
       await storage.setItem("email", dataLogin?.user?.email);
       await storage.setItem("aToken", dataLogin?.user?.aToken);
       await storage.setItem("rToken", dataLogin?.user?.rToken);
-      await
       //@ts-ignore
       navigation.navigate(Routes.Main.value);
     };
