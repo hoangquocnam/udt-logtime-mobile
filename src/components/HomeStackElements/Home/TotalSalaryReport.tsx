@@ -1,8 +1,8 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ProjectDetail } from "../../../interfaces/project";
-import { formatCash, getImageUrl } from "../../../utils";
+import { formatCash, formatDecimal } from "../../../utils";
 import { useGetReportProject } from "../../../api/report";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import {
   DARK_GRAY,
   LIGHT_GREEN,
@@ -10,11 +10,11 @@ import {
   SUCCESS,
   WARNING,
 } from "../../../theme/colors";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-type Props = { projects: ProjectDetail[]; period: string };
+type Props = { projects: ProjectDetail[]; period: string; date: Date };
 
-const TotalSalaryReport = ({ projects, period }: Props) => {
+const TotalSalaryReport = ({ projects, period, date }: Props) => {
   const { mutateAsync } = useGetReportProject();
   const [totalSalary, setTotalSalary] = useState(0);
   const [totalWorkingTime, setTotalWorkingTime] = useState(0);
@@ -24,7 +24,7 @@ const TotalSalaryReport = ({ projects, period }: Props) => {
       mutateAsync({
         project: project?._id,
         period: period,
-        date: format(new Date(), "yyyy-MM-dd"),
+        date: format(date ?? new Date(), "yyyy-MM-dd"),
       })
     );
     const results = await Promise.all(promises);
@@ -48,14 +48,14 @@ const TotalSalaryReport = ({ projects, period }: Props) => {
       setTotalSalary(total);
       setTotalWorkingTime(totalWorkingTime);
     });
-  }, [projects, period]);
+  }, [projects, period, date]);
 
   return (
     <View style={[styles.container]}>
       <View style={[styles.itemContainer, styles.timeContainer]}>
         <Text style={[styles.headerText]}>{"Total working time"}</Text>
         <Text style={[styles.valueText, styles.timeText]}>
-          {totalWorkingTime ?? 0}
+          {formatDecimal(totalWorkingTime ?? 0)}
         </Text>
       </View>
 

@@ -21,3 +21,7 @@ export const formatCash = (num: number) => {
   // split by dot
   return num.toLocaleString("it-IT", { style: "currency", currency: "VND" });
 };
+
+export const formatDecimal = (num: number) => {
+  return num.toLocaleString("it-IT", { minimumFractionDigits: 2 });
+}

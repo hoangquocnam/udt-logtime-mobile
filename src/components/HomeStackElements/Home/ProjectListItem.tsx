@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ProjectDetail } from "../../../interfaces/project";
-import { formatCash, getImageUrl } from "../../../utils";
+import { formatCash, getImageUrl, formatDecimal } from "../../../utils";
 import { useGetReportProject } from "../../../api/report";
 import { format } from "date-fns";
 import {
@@ -12,18 +12,18 @@ import {
   WARNING,
 } from "../../../theme/colors";
 
-type Props = { item: ProjectDetail; period: string };
+type Props = { item: ProjectDetail; period: string; date: Date };
 
-const ProjectListItem = ({ item, period }: Props) => {
+const ProjectListItem = ({ item, period, date }: Props) => {
   const { mutateAsync, data: dataReportProject } = useGetReportProject();
 
   useEffect(() => {
     mutateAsync({
       project: item?._id,
       period: period,
-      date: format(new Date(), "yyyy-MM-dd"),
+      date: format(date ?? new Date(), "yyyy-MM-dd"),
     });
-  }, [item, period]);
+  }, [item, period, date]);
 
   return (
     <TouchableOpacity>
@@ -55,7 +55,9 @@ const ProjectListItem = ({ item, period }: Props) => {
           <View style={[styles.itemContainer, styles.timeContainer]}>
             <Text style={[styles.headerText]}>{"Total working time"}</Text>
             <Text style={[styles.valueText, styles.timeText]}>
-              {dataReportProject?.reportDetail?.totalWorkingTime ?? 0}
+              {formatDecimal(
+                dataReportProject?.reportDetail?.totalWorkingTime ?? 0
+              )}
             </Text>
           </View>
 

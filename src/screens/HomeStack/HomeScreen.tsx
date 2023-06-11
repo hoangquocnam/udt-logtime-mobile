@@ -18,14 +18,15 @@ import PeriodSelector from "../../components/HomeStackElements/Home/PeriodSelect
 
 function HomeScreen() {
   const { data: dataProjects, isLoading: isLoadingProjects } = useGetProjects();
-  const [currentPeriod, setCurrentPeriod] = useState("month");
+  const [currentPeriod, setCurrentPeriod] = useState("week");
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const isLoading = useMemo(() => {
     return isLoadingProjects;
   }, [isLoadingProjects]);
 
   const renderItem: ListRenderItem<ProjectDetail> = ({ item }) => (
-    <ProjectListItem item={item} period={currentPeriod} />
+    <ProjectListItem item={item} period={currentPeriod} date={selectedDate} />
   );
 
   if (isLoading) {
@@ -44,10 +45,18 @@ function HomeScreen() {
     setCurrentPeriod(period);
   };
 
+  const onChangeDate = (date: Date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <View style={styles.container}>
       <View style={[styles.itemContainer, t.mB4]}>
-        <PeriodSelector onChange={onChangePeriod} />
+        <PeriodSelector
+          onChange={onChangePeriod}
+          onChangeDate={onChangeDate}
+          date={selectedDate}
+        />
       </View>
 
       <ScrollView style={styles.container}>
@@ -59,6 +68,7 @@ function HomeScreen() {
             <TotalSalaryReport
               projects={dataProjects?.projects}
               period={currentPeriod}
+              date={selectedDate}
             />
           </View>
 
