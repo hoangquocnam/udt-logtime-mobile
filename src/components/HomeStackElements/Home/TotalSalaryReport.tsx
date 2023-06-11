@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ProjectDetail } from "../../../interfaces/project";
 import { formatCash, getImageUrl } from "../../../utils";
 import { useGetReportProject } from "../../../api/report";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import {
   DARK_GRAY,
   LIGHT_GREEN,
@@ -12,7 +12,9 @@ import {
 } from "../../../theme/colors";
 import { useEffect, useMemo, useState } from "react";
 
-const TotalSalaryReport = ({ projects }: { projects: ProjectDetail[] }) => {
+type Props = { projects: ProjectDetail[]; period: string };
+
+const TotalSalaryReport = ({ projects, period }: Props) => {
   const { mutateAsync } = useGetReportProject();
   const [totalSalary, setTotalSalary] = useState(0);
   const [totalWorkingTime, setTotalWorkingTime] = useState(0);
@@ -21,7 +23,7 @@ const TotalSalaryReport = ({ projects }: { projects: ProjectDetail[] }) => {
     const promises = projects.map((project) =>
       mutateAsync({
         project: project?._id,
-        period: "month",
+        period: period,
         date: format(new Date(), "yyyy-MM-dd"),
       })
     );
@@ -46,7 +48,7 @@ const TotalSalaryReport = ({ projects }: { projects: ProjectDetail[] }) => {
       setTotalSalary(total);
       setTotalWorkingTime(totalWorkingTime);
     });
-  }, [projects]);
+  }, [projects, period]);
 
   return (
     <View style={[styles.container]}>

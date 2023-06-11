@@ -12,16 +12,18 @@ import {
   WARNING,
 } from "../../../theme/colors";
 
-const ProjectListItem = ({ item }: { item: ProjectDetail }) => {
+type Props = { item: ProjectDetail; period: string };
+
+const ProjectListItem = ({ item, period }: Props) => {
   const { mutateAsync, data: dataReportProject } = useGetReportProject();
 
   useEffect(() => {
     mutateAsync({
       project: item?._id,
-      period: "month",
+      period: period,
       date: format(new Date(), "yyyy-MM-dd"),
     });
-  }, []);
+  }, [item, period]);
 
   return (
     <TouchableOpacity>

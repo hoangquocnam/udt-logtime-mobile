@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -14,19 +14,21 @@ import { ProjectDetail } from "../../interfaces/project";
 import ProjectListItem from "../../components/HomeStackElements/Home/ProjectListItem";
 import TotalSalaryReport from "../../components/HomeStackElements/Home/TotalSalaryReport";
 import t from "../../theme";
+import PeriodSelector from "../../components/HomeStackElements/Home/PeriodSelector";
 
 function HomeScreen() {
-  const {
-    data: dataProjects,
-    isLoading: isLoadingProjects,
-    error: errorProjects,
-  } = useGetProjects();
+  const { data: dataProjects, isLoading: isLoadingProjects } = useGetProjects();
+  const [currentPeriod, setCurrentPeriod] = useState("month");
+
+  const isLoading = useMemo(() => {
+    return isLoadingProjects;
+  }, [isLoadingProjects]);
 
   const renderItem: ListRenderItem<ProjectDetail> = ({ item }) => (
-    <ProjectListItem item={item} />
+    <ProjectListItem item={item} period={currentPeriod} />
   );
 
-  if (isLoadingProjects) {
+  if (isLoading) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#000" />
@@ -38,31 +40,44 @@ function HomeScreen() {
     return <View style={[t.h5]} />;
   };
 
+  const onChangePeriod = (period: string) => {
+    setCurrentPeriod(period);
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View>
-        <View style={styles.itemContainer}>
-          <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
-            Total report
-          </Text>
-          <TotalSalaryReport projects={dataProjects?.projects} />
-        </View>
-
-        <View style={[t.h0_5, t.bgGray400, t.mY8]} />
-
-        <View>
-          <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
-            Projects
-          </Text>
-          <FlatList<ProjectDetail>
-            data={dataProjects?.projects}
-            renderItem={renderItem}
-            ItemSeparatorComponent={ItemSeparator}
-            style={{ flex: 1, height: "100%" }}
-          />
-        </View>
+    <View style={styles.container}>
+      <View style={[styles.itemContainer, t.mB4]}>
+        <PeriodSelector onChange={onChangePeriod} />
       </View>
-    </ScrollView>
+
+      <ScrollView style={styles.container}>
+        <View>
+          <View style={styles.itemContainer}>
+            <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
+              Total report
+            </Text>
+            <TotalSalaryReport
+              projects={dataProjects?.projects}
+              period={currentPeriod}
+            />
+          </View>
+
+          <View style={[t.h0_5, t.bgGray400, t.mY8]} />
+
+          <View style={[t.mB5, styles.itemContainer]}>
+            <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
+              Projects
+            </Text>
+            <FlatList<ProjectDetail>
+              data={dataProjects?.projects}
+              renderItem={renderItem}
+              ItemSeparatorComponent={ItemSeparator}
+              style={{ flex: 1, height: "100%" }}
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -70,9 +85,8 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    padding: 20,
     flex: 1,
-    height: "100%",
     backgroundColor: "white",
   },
   loadingContainer: {
