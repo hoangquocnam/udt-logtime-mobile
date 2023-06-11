@@ -6,12 +6,13 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
-import { useGetProjects } from "../../api/report-timesheet";
+import { useGetProjects } from "../../api/projects";
 import { ProjectDetail } from "../../interfaces/project";
 import ProjectListItem from "../../components/HomeStackElements/Home/ProjectListItem";
+
+const SalaryReport = () => {};
 
 function HomeScreen() {
   const {
@@ -42,6 +43,7 @@ function HomeScreen() {
         data={dataProjects?.projects}
         renderItem={renderItem}
         ItemSeparatorComponent={ItemSeparator}
+        style={{ flex: 1, height: "100%" }}
       />
     </ScrollView>
   );

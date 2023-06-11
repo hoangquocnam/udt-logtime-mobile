@@ -1,19 +1,16 @@
 import React from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Image,
-  ListRenderItem,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { ProjectDetail } from "../../../interfaces/project";
 import { getImageUrl } from "../../../utils";
+import { useGetReportProject } from "../../../api/report";
 
 const ProjectListItem = ({ item }: { item: ProjectDetail }) => {
+  // const { data, error } = useGetReportProject({
+  //   project: item?._id,
+  //   period: "month",
+  //   date: "2023-06-09",
+  // });
+
   return (
     <View style={styles.container}>
       <View style={[styles.logoContainer]}>
@@ -34,11 +31,9 @@ const ProjectListItem = ({ item }: { item: ProjectDetail }) => {
           <Text style={styles.valueText}>{item?.name}</Text>
         </View>
 
-        {/* commitedHours */}
-
         <View style={styles.itemContainer}>
-          <Text style={[styles.headerText]}>{"Committed Hours:"}</Text>
-          <Text style={styles.valueText}>{item?.commitedHours}</Text>
+          <Text style={[styles.headerText]}>{"Payment period"}</Text>
+          <Text style={styles.valueText}>{item?.paymentPeriod}</Text>
         </View>
       </View>
     </View>
@@ -51,6 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     borderWidth: 1,
+    flex: 1,
   },
   itemContainer: {
     marginBottom: 10,
