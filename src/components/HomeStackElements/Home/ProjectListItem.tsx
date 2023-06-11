@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerText: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
   },
   valueText: {},
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   priceText: {
     color: SUCCESS,
     fontWeight: "600",
-    fontSize: 18,
+    fontSize: 15,
   },
   divider: {
     height: 1,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   timeText: {
     color: WARNING,
     fontWeight: "600",
-    fontSize: 18,
+    fontSize: 15,
   },
 });
 

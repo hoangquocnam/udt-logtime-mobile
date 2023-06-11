@@ -7,10 +7,13 @@ import {
   DARK_GRAY,
   LIGHT_GREEN,
   LIGHT_YELLOW,
+  PRIMARY,
   SUCCESS,
   WARNING,
 } from "../../../theme/colors";
 import { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import t from "../../../theme";
 
 type Props = { projects: ProjectDetail[]; period: string; date: Date };
 
@@ -18,6 +21,7 @@ const TotalSalaryReport = ({ projects, period, date }: Props) => {
   const { mutateAsync } = useGetReportProject();
   const [totalSalary, setTotalSalary] = useState(0);
   const [totalWorkingTime, setTotalWorkingTime] = useState(0);
+  const [isShowSalary, setIsShowSalary] = useState(false);
 
   const getTotal = async () => {
     const promises = projects.map((project) =>
@@ -62,10 +66,19 @@ const TotalSalaryReport = ({ projects, period, date }: Props) => {
       <View style={styles.divider} />
 
       <View style={[styles.itemContainer, styles.priceContainer]}>
-        <Text style={[styles.headerText]}>{"Total salary"}</Text>
-        <Text style={[styles.valueText, styles.priceText]}>
-          {formatCash(totalSalary ?? 0)}
-        </Text>
+        <View>
+          <Text style={[styles.headerText]}>{"Total salary"}</Text>
+          <Text style={[styles.valueText, styles.priceText]}>
+            {isShowSalary ? formatCash(totalSalary ?? 0) : "*****"}
+          </Text>
+        </View>
+        <View style={[t.itemsCenter, t.justifyCenter]}>
+          <Ionicons
+            name={isShowSalary ? "eye" : "eye-off"}
+            size={24}
+            onPress={() => setIsShowSalary(!isShowSalary)}
+          />
+        </View>
       </View>
     </View>
   );
@@ -85,7 +98,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerText: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: "bold",
   },
   valueText: {},
@@ -105,12 +118,14 @@ const styles = StyleSheet.create({
   priceContainer: {
     backgroundColor: LIGHT_GREEN,
     padding: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
     borderRadius: 10,
   },
   priceText: {
     color: SUCCESS,
     fontWeight: "600",
-    fontSize: 18,
+    fontSize: 16,
   },
   divider: {
     height: 1,
@@ -126,6 +141,6 @@ const styles = StyleSheet.create({
   timeText: {
     color: WARNING,
     fontWeight: "600",
-    fontSize: 18,
+    fontSize: 16,
   },
 });
