@@ -17,8 +17,8 @@ import { NormalTextInput } from "../UI/TextInput";
 import useToast from "../../hooks/useToast";
 import { IUserLogin } from "../../interfaces/user";
 import { useMe, usePostLogin } from "../../api/auth";
-import Routes from "../../navigation/routes";
-import Storage from "../../store";
+import appRoutes from "../../navigation/routes";
+import LocalStorage from "../../store/localStorage";
 
 const schema = yup
   .object({
@@ -39,7 +39,7 @@ const LoginForm = () => {
       show({ message: error.message, color: ERROR });
     },
   });
-  const storage = Storage.getInstance();
+  const storage = LocalStorage.getInstance();
 
   const { data: me, isLoading: isLoadingMe } = useMe();
   const { show } = useToast();
@@ -68,7 +68,7 @@ const LoginForm = () => {
       await storage.setItem("aToken", dataLogin?.user?.aToken);
       await storage.setItem("rToken", dataLogin?.user?.rToken);
       //@ts-ignore
-      navigation.navigate(Routes.Main.value);
+      navigation.navigate(appRoutes.Home.value);
     };
 
     if (dataLogin?.user) {
@@ -79,7 +79,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (me) {
       //@ts-ignore
-      navigation.navigate(Routes.Main.value);
+      navigation.navigate(appRoutes.Home.value);
     }
   }, [me]);
 

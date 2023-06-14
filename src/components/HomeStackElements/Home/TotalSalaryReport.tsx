@@ -1,19 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ProjectDetail } from "../../../interfaces/project";
 import { formatCash, formatDecimal } from "../../../utils";
 import { useGetReportProject } from "../../../api/report";
 import { format } from "date-fns";
 import {
+  DARK_BLUE,
   DARK_GRAY,
+  LIGHT_BLUE,
   LIGHT_GREEN,
   LIGHT_YELLOW,
   PRIMARY,
+  SEMI_DARK_BLUE,
   SUCCESS,
   WARNING,
 } from "../../../theme/colors";
 import { useEffect, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
 import t from "../../../theme";
+import { Box, Button, HStack, Text, VStack } from "native-base";
+import { Feather, Ionicons } from "@expo/vector-icons";
 
 type Props = { projects: ProjectDetail[]; period: string; date: Date };
 
@@ -55,32 +59,73 @@ const TotalSalaryReport = ({ projects, period, date }: Props) => {
   }, [projects, period, date]);
 
   return (
-    <View style={[styles.container]}>
-      <View style={[styles.itemContainer, styles.timeContainer]}>
-        <Text style={[styles.headerText]}>{"Total working time"}</Text>
-        <Text style={[styles.valueText, styles.timeText]}>
-          {formatDecimal(totalWorkingTime ?? 0)}
+    <VStack
+      style={[styles.container]}
+      alignItems={"center"}
+      minH={"250px"}
+      justifyContent={"center"}
+      space={3}
+    >
+      <Box>
+        <Text fontWeight={"500"} fontSize={18} color={SEMI_DARK_BLUE}>
+          Main account
         </Text>
-      </View>
+      </Box>
 
-      <View style={styles.divider} />
+      <Box alignItems={"center"}>
+        <Text
+          fontWeight={"600"}
+          fontSize={36}
+          color={DARK_BLUE}
+          numberOfLines={1}
+          adjustsFontSizeToFit={true}
+        >
+          {isShowSalary ? formatCash(totalSalary ?? 0) : "*****"}
+        </Text>
 
-      <View style={[styles.itemContainer, styles.priceContainer]}>
-        <View>
-          <Text style={[styles.headerText]}>{"Total salary"}</Text>
-          <Text style={[styles.valueText, styles.priceText]}>
-            {isShowSalary ? formatCash(totalSalary ?? 0) : "*****"}
-          </Text>
-        </View>
-        <View style={[t.itemsCenter, t.justifyCenter]}>
-          <Ionicons
-            name={isShowSalary ? "eye" : "eye-off"}
-            size={24}
-            onPress={() => setIsShowSalary(!isShowSalary)}
-          />
-        </View>
-      </View>
-    </View>
+        <Text fontWeight={"600"} fontSize={24} color={SEMI_DARK_BLUE}>
+          {formatDecimal(totalWorkingTime ?? 0) + " h"}
+        </Text>
+      </Box>
+
+      <HStack space={5} alignItems={"center"} justifyContent={"center"} mt={3}>
+        <Button
+          bg={DARK_BLUE}
+          flex={1}
+          borderRadius={14}
+          flexDir={"row"}
+          onPress={() => {}}
+        >
+          <HStack space={4} flex={1} py={3} alignItems={"center"}>
+            <Text color={"white"} fontSize={16} fontWeight={"600"}>
+              Add
+            </Text>
+            <Feather name="plus-square" size={24} color={"white"} />
+          </HStack>
+        </Button>
+
+        <Button
+          bg={"white"}
+          flex={1}
+          borderRadius={14}
+          flexDir={"row"}
+          onPress={() => {
+            setIsShowSalary(!isShowSalary);
+          }}
+        >
+          <HStack space={4} flex={1} py={3} alignItems={"center"}>
+            <Text color={DARK_BLUE} fontSize={16} fontWeight={"600"}>
+              {isShowSalary ? "Hide" : "Show"}
+            </Text>
+            <Ionicons
+              name={isShowSalary ? "eye" : "eye-off"}
+              size={24}
+              color={DARK_BLUE}
+            />
+          </HStack>
+        </Button>
+      </HStack>
+    </VStack>
   );
 };
 
@@ -88,11 +133,10 @@ export default TotalSalaryReport;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: DARK_GRAY,
+    paddingVertical: 35,
+    paddingHorizontal: 20,
+    backgroundColor: "#DCE8F5",
+    borderRadius: 24,
   },
   itemContainer: {
     marginBottom: 10,

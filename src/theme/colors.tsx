@@ -11,7 +11,10 @@ export const LIGHT_GRAY = "#f2f2f2";
 export const LIGHTER_GRAY = "#fafafa";
 export const DARKER_GRAY = "#e6e6e6";
 export const LIGHT_PURPLE = "#e6e6ff";
-export const LIGHT_BLUE = "#e6f7ff";
 export const LIGHT_GREEN = "#e6ffe6";
 export const LIGHT_RED = "#ffe6e6";
 export const LIGHT_YELLOW = "#ffffe6";
+
+export const LIGHT_BLUE = "#DCE8F5";
+export const DARK_BLUE = "#283B51";
+export const SEMI_DARK_BLUE = "#446388";

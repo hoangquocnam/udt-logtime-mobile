@@ -1,10 +1,14 @@
-const Routes = {
+const appRoutes = {
   Main: {
     value: "Main",
-    Home: "Home",
-    Favorites: "Favorites",
   },
-  Login: "Login",
+  Home: {
+    value: "Home",
+  },
+  Auth: {
+    value: "Auth",
+    Login: "Login",
+  },
 };
 
-export default Routes;
+export default appRoutes;

@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "react-query";
 import { router } from "../router";
 import { IUserLogin, IUserState } from "../../interfaces/user";
 import { authHeader } from "..";
-import Storage from "../../store";
+import LocalStorage from "../../store/localStorage";
 
 const postLogin = async (email: string, password: string) => {
   const response = await fetch(router.login.value, {
@@ -49,7 +49,7 @@ export const useMe = () => {
   >({
     queryKey: ["me"],
     queryFn: async () => {
-      const storage = Storage.getInstance();
+      const storage = LocalStorage.getInstance();
       const email = await storage.getItem("email");
       const response = await fetch(
         `https://app.udt.group/v1/auth/refresh-token/${email}`,

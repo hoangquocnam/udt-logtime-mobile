@@ -59,12 +59,9 @@ function HomeScreen() {
         />
       </View>
 
-      <ScrollView style={styles.container}>
+      <ScrollView>
         <View>
           <View style={styles.itemContainer}>
-            <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
-              Total report
-            </Text>
             <TotalSalaryReport
               projects={dataProjects?.projects}
               period={currentPeriod}

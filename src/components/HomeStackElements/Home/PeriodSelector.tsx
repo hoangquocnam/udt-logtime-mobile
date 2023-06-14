@@ -1,5 +1,11 @@
 import SelectDropdown from "react-native-select-dropdown";
-import { DARK_GRAY, LIGHTER_GRAY, LIGHT_GREEN } from "../../../theme/colors";
+import {
+  DARK_BLUE,
+  DARK_GRAY,
+  LIGHTER_GRAY,
+  LIGHT_BLUE,
+  LIGHT_GREEN,
+} from "../../../theme/colors";
 import { AntDesign } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import FormDateTimePicker from "../../UI/FormDatePicker";
@@ -62,33 +68,33 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
             return item;
           }}
           buttonStyle={{
-            backgroundColor: DARK_GRAY,
+            backgroundColor: DARK_BLUE,
             flex: 1,
-            borderRadius: 12,
+            borderRadius: 14,
             borderWidth: 1,
+            paddingHorizontal: 23,
           }}
           buttonTextStyle={{
             textTransform: "capitalize",
             fontWeight: "bold",
-            fontSize: 13,
-            color: LIGHTER_GRAY,
+            fontSize: 14,
+            flex: 1,
+            color: LIGHT_BLUE,
           }}
           rowStyle={{
             borderRadius: 12,
+            backgroundColor: "white",
           }}
           rowTextStyle={{
             textTransform: "capitalize",
+            fontWeight: "bold",
           }}
           selectedRowStyle={{
-            backgroundColor: LIGHT_GREEN,
+            backgroundColor: LIGHT_BLUE,
           }}
           dropdownStyle={{
-            borderRadius: 12,
-          }}
-          renderDropdownIcon={() => {
-            return (
-              <AntDesign name="downcircleo" size={24} color={LIGHTER_GRAY} />
-            );
+            borderBottomRightRadius: 12,
+            borderBottomLeftRadius: 12,
           }}
         />
         <TouchableNativeFeedback
