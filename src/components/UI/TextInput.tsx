@@ -1,6 +1,6 @@
 import { get } from "lodash";
 import React, { useState } from "react";
-import { Text, TextInput, TextProps } from "react-native";
+import { TextProps } from "react-native";
 import {
   errorStyle,
   focusInputStyle,
@@ -9,6 +9,8 @@ import {
   labelStyle,
 } from "./styles";
 import { Controller, useFormContext } from "react-hook-form";
+import { Input, Text, FormControl } from "native-base";
+import { DARK_BLUE, LIGHT_BLUE, SEMI_DARK_BLUE } from "../../theme/colors";
 
 type CustomTextInputProps = {
   name: string;
@@ -37,7 +39,7 @@ export const NormalTextInput = (props: CustomTextInputProps) => {
         name={name}
         render={({ field: { onChange, onBlur, value } }) => {
           return (
-            <TextInput
+            <Input
               placeholder={placeholder}
               placeholderTextColor={"gray"}
               onChangeText={onChange}
@@ -48,10 +50,13 @@ export const NormalTextInput = (props: CustomTextInputProps) => {
               }}
               onFocus={onFocus}
               value={value}
-              style={[
-                isFocused ? focusInputStyle : inputStyles,
-                errors[name] && inputErrorStyle,
-              ]}
+              borderWidth={2}
+              focusOutlineColor={DARK_BLUE}
+              borderColor={LIGHT_BLUE}
+              backgroundColor={"white"}
+              padding={3}
+              h={50}
+              borderRadius={10}
               autoCapitalize="none"
               autoComplete="off"
             />

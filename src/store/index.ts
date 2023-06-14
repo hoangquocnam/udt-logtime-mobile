@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { configurePersistable } from "mobx-persist-store";
+import AuthStore from "./authStore";
 
 configurePersistable(
   {
@@ -9,7 +10,10 @@ configurePersistable(
 );
 
 export class RootStore {
-  constructor() {}
+  authStore: AuthStore;
+  constructor() {
+    this.authStore = new AuthStore(this);
+  }
 }
 
 export const rootStore = new RootStore();

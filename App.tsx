@@ -5,7 +5,9 @@ import BottomToast from "./src/components/UI/BottomToast";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { NativeBaseProvider, extendTheme } from "native-base";
 import { useFonts } from "expo-font";
+import { Provider as MobxProvider } from "mobx-react";
 import { DARK_BLUE, LIGHT_BLUE, SEMI_DARK_BLUE } from "./src/theme/colors";
+import { rootStore } from "./src/store";
 
 const queryClient = new QueryClient();
 
@@ -52,14 +54,16 @@ export default function App() {
   }
 
   return (
-    <NativeBaseProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <ToastProvider>
-          <AppNavigation />
-          <StatusBar style="auto" />
-          <BottomToast />
-        </ToastProvider>
-      </QueryClientProvider>
-    </NativeBaseProvider>
+    <MobxProvider {...rootStore}>
+      <NativeBaseProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <ToastProvider>
+            <AppNavigation />
+            <StatusBar style="auto" />
+            <BottomToast />
+          </ToastProvider>
+        </QueryClientProvider>
+      </NativeBaseProvider>
+    </MobxProvider>
   );
 }

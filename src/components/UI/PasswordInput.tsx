@@ -1,16 +1,16 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Text, TextInput, View, ViewProps } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TextInput, View, ViewProps, TouchableOpacity } from "react-native";
 import t from "../../theme";
-import { PRIMARY } from "../../theme/colors";
+import { DARK_BLUE, LIGHT_BLUE, PRIMARY, SEMI_DARK_BLUE } from "../../theme/colors";
 import {
   focusInputStyle,
   inputErrorStyle,
   labelStyle,
   inputStyles,
 } from "./styles";
+import { Box, Input, Text } from "native-base";
 
 interface ICustomPasswordInputProps {
   name: string;
@@ -43,21 +43,22 @@ export const PasswordInput = (props: ICustomPasswordInputProps) => {
           required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
-          <View
-            style={[
-              isFocused
-                ? (focusInputStyle as ViewProps)
-                : (inputStyles as ViewProps),
-              t.flexRow,
-              t.itemsCenter,
-              errors.password && inputErrorStyle,
-            ]}
-          >
-            <TextInput
+          <View>
+            <Input
               placeholderTextColor={"gray"}
               placeholder={placeholder}
-              style={[t.flex1, t.hFull]}
               secureTextEntry={!isShowPassword}
+              rightElement={
+                <TouchableOpacity onPress={handleViewPassword}>
+                  <Box mx={2}>
+                    <Ionicons
+                      name={isShowPassword ? "eye" : "eye-off"}
+                      size={24}
+                      color={DARK_BLUE}
+                    />
+                  </Box>
+                </TouchableOpacity>
+              }
               onChangeText={(text) => {
                 onChange(text);
               }}
@@ -66,15 +67,15 @@ export const PasswordInput = (props: ICustomPasswordInputProps) => {
                 onStyleBlur();
               }}
               onFocus={onFocus}
+              borderWidth={2}
+              focusOutlineColor={DARK_BLUE}
+              borderColor={LIGHT_BLUE}
+              backgroundColor={"white"}
+              padding={3}
+              h={50}
+              borderRadius={10}
               value={value}
             />
-            <TouchableOpacity onPress={handleViewPassword}>
-              <Ionicons
-                name={isShowPassword ? "eye" : "eye-off"}
-                size={24}
-                color={PRIMARY}
-              />
-            </TouchableOpacity>
           </View>
         )}
         name={name}

@@ -49,6 +49,10 @@ export const useMe = () => {
     queryKey: ["me"],
     queryFn: async () => {
       const storage = LocalStorage.getInstance();
+      const aToken = await storage.getItem("rToken");
+      if (!aToken) {
+        throw new Error("Token not found");
+      }
       const email = await storage.getItem("email");
       const response = await fetch(
         `https://app.udt.group/v1/auth/refresh-token/${email}`,

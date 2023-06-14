@@ -26,7 +26,7 @@ const TotalSalaryReport = ({ projects, period, date }: Props) => {
   const [isShowSalary, setIsShowSalary] = useState(true);
 
   const getTotal = async () => {
-    const promises = projects.map((project) =>
+    const promises = projects?.map((project) =>
       mutateAsync({
         project: project?._id,
         period: period,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   reportContainer: {},
-  
+
   priceText: {
     color: SUCCESS,
     fontWeight: "600",

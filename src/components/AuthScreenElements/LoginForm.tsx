@@ -6,12 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  Text,
   ActivityIndicator,
 } from "react-native";
 import * as yup from "yup";
 import t from "../../theme";
-import { ERROR, GRAY } from "../../theme/colors";
+import { DARK_BLUE, ERROR } from "../../theme/colors";
 import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
 import useToast from "../../hooks/useToast";
@@ -19,6 +18,8 @@ import { IUserLogin } from "../../interfaces/user";
 import { useMe, usePostLogin } from "../../api/auth";
 import appRoutes from "../../navigation/routes";
 import LocalStorage from "../../store/localStorage";
+import { Button, Text, VStack } from "native-base";
+import { useStores } from "../../hooks/useStores";
 
 const schema = yup
   .object({
@@ -40,6 +41,7 @@ const LoginForm = () => {
     },
   });
   const storage = LocalStorage.getInstance();
+  const { authStore } = useStores();
 
   const { data: me, isLoading: isLoadingMe } = useMe();
   const { show } = useToast();
@@ -67,19 +69,17 @@ const LoginForm = () => {
       await storage.setItem("email", dataLogin?.user?.email);
       await storage.setItem("aToken", dataLogin?.user?.aToken);
       await storage.setItem("rToken", dataLogin?.user?.rToken);
-      //@ts-ignore
-      navigation.navigate(appRoutes.Home.value);
     };
 
     if (dataLogin?.user) {
+      authStore.setUser(dataLogin?.user);
       onLoginSuccess();
     }
   }, [dataLogin]);
 
   useEffect(() => {
     if (me) {
-      //@ts-ignore
-      navigation.navigate(appRoutes.Home.value);
+      authStore.setUser(me?.user);
     }
   }, [me]);
 
@@ -93,32 +93,29 @@ const LoginForm = () => {
 
   return (
     <FormProvider {...method}>
-      <NormalTextInput
-        name="email"
-        placeholder="Email"
-        label="What is your email address?"
-        autoFocus
-      />
-      <View style={[t.mY3]} />
-      <PasswordInput
-        name="password"
-        placeholder="Your password"
-        label="Enter your password"
-      />
+      <VStack space={5}>
+        <NormalTextInput
+          name="email"
+          placeholder="Email"
+          label="What is your email address?"
+          autoFocus
+        />
+        <PasswordInput
+          name="password"
+          placeholder="Your password"
+          label="Enter your password"
+        />
 
-      <TouchableOpacity
-        style={[
-          styles.submitButton,
-          isDirty ? styles.activeButton : styles.disabledSubmitButton,
-        ]}
-        onPress={handleSubmit(handleLogin)}
-      >
-        {isLoading ? (
-          <ActivityIndicator size="small" color="white" />
-        ) : (
-          <Text style={styles.submitText}>Login</Text>
-        )}
-      </TouchableOpacity>
+        <Button
+          onPress={handleSubmit(handleLogin)}
+          bgColor={DARK_BLUE}
+          borderRadius={14}
+          disabled={!isDirty}
+          _pressed={{ opacity: 0.8 }}
+        >
+          <Text style={[styles.submitText]}>Login</Text>
+        </Button>
+      </VStack>
     </FormProvider>
   );
 };
@@ -135,9 +132,7 @@ const styles = StyleSheet.create({
   activeButton: {
     backgroundColor: "purple",
   },
-  disabledSubmitButton: {
-    backgroundColor: GRAY,
-  },
+  disabledSubmitButton: {},
   submitText: {
     color: "white",
     textTransform: "uppercase",
