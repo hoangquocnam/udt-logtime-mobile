@@ -3,6 +3,7 @@ import { View, FlatListProps } from "react-native";
 import WheelPicker from "react-native-wheely";
 import moment from "moment";
 import t from "../../../theme";
+import { LIGHT_BLUE, SEMI_DARK_BLUE } from "../../../theme/colors";
 
 type FormDateTimePickerProps = {
   onChange?: (date: Date) => void;
@@ -90,6 +91,21 @@ const FormDateTimePicker = ({ onChange, value }: FormDateTimePickerProps) => {
     }
   }, [value]);
 
+  useEffect(() => {
+    const now = moment();
+    const year = now.format("YYYY");
+    const month = now.format("MMMM");
+    const day = now.format("D").toString();
+
+    const yearIndex = YEARS.indexOf(year);
+    const monthIndex = MONTHS.indexOf(month);
+    const dayIndex = DAYS.indexOf(day);
+
+    setSelectedYearIndex(yearIndex);
+    setSelectedMonthIndex(monthIndex);
+    setSelectedDayIndex(dayIndex);
+  }, []);
+
   return (
     <View style={styles.contentContainerStyle}>
       {/* Month */}
@@ -157,10 +173,12 @@ const useStyles = () => {
     itemStyle: {},
     selectedIndicatorStyle: {
       borderRadius: 0,
-      backgroundColor: "transparent",
+      backgroundColor: LIGHT_BLUE,
+      borderColor: SEMI_DARK_BLUE,
       borderWidth: 1,
     },
     itemTextStyle: {
+      fontFamily: "Satoshi",
       fontWeight: "bold",
     },
     firstColumnStyle: {

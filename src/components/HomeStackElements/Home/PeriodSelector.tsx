@@ -1,17 +1,12 @@
 import SelectDropdown from "react-native-select-dropdown";
-import {
-  DARK_BLUE,
-  DARK_GRAY,
-  LIGHTER_GRAY,
-  LIGHT_BLUE,
-  LIGHT_GREEN,
-} from "../../../theme/colors";
+import { BACKGROUND, DARK_BLUE, LIGHT_BLUE } from "../../../theme/colors";
 import { AntDesign } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import FormDateTimePicker from "../../UI/FormDatePicker";
-import { Text, TouchableNativeFeedback, View } from "react-native";
+import { TouchableNativeFeedback, View } from "react-native";
 import t from "../../../theme";
 import { format } from "date-fns";
+import { Box } from "native-base";
 
 type PeriodSelectorProps = {
   onChange: (value: string) => void;
@@ -19,20 +14,26 @@ type PeriodSelectorProps = {
   date: Date;
 };
 
+export enum EPeriods {
+  DAY = "day",
+  WEEK = "week",
+  MONTH = "month",
+}
+
 const PeriodSelector = (props: PeriodSelectorProps) => {
   const { onChange, onChangeDate, date } = props;
-  const [currentPeriod, setCurrentPeriod] = useState("week");
+  const [currentPeriod, setCurrentPeriod] = useState(EPeriods.MONTH);
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const periods = ["day", "week", "month"];
+  const periods = [EPeriods.DAY, EPeriods.WEEK, EPeriods.MONTH];
 
   const buttonText = (currentPeriod: string) => {
-    if (currentPeriod === "day") {
+    if (currentPeriod === EPeriods.DAY) {
       return format(date, "dd/MM/yyyy");
     }
-    if (currentPeriod === "week") {
+    if (currentPeriod === EPeriods.WEEK) {
       return format(date, "dd/MM/yyyy");
     }
-    if (currentPeriod === "month") {
+    if (currentPeriod === EPeriods.MONTH) {
       return format(date, "MM/yyyy");
     }
     return currentPeriod;
@@ -40,12 +41,12 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
 
   useEffect(() => {
     if (currentPeriod) {
-      setShowDatePicker(currentPeriod === "day");
+      setShowDatePicker(currentPeriod === EPeriods.DAY);
     }
   }, [currentPeriod]);
 
   return (
-    <>
+    <Box backgroundColor={BACKGROUND}>
       <View style={[t.flexRow]}>
         <SelectDropdown
           data={periods}
@@ -77,9 +78,9 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
           buttonTextStyle={{
             textTransform: "capitalize",
             fontWeight: "bold",
-            fontSize: 14,
             flex: 1,
             color: LIGHT_BLUE,
+            fontFamily: "Satoshi",
           }}
           rowStyle={{
             borderRadius: 12,
@@ -88,6 +89,7 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
           rowTextStyle={{
             textTransform: "capitalize",
             fontWeight: "bold",
+            fontSize: 14,
           }}
           selectedRowStyle={{
             backgroundColor: LIGHT_BLUE,
@@ -95,6 +97,7 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
           dropdownStyle={{
             borderBottomRightRadius: 12,
             borderBottomLeftRadius: 12,
+            backgroundColor: "transparent",
           }}
         />
         <TouchableNativeFeedback
@@ -108,7 +111,7 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
               t.mL2,
               t.justifyCenter,
               {
-                backgroundColor: showDatePicker ? LIGHT_GREEN : "transparent",
+                backgroundColor: showDatePicker ? LIGHT_BLUE : "transparent",
                 padding: 10,
                 borderRadius: 12,
               },
@@ -126,7 +129,7 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
         </TouchableNativeFeedback>
       </View>
       {showDatePicker ? <FormDateTimePicker onChange={onChangeDate} /> : null}
-    </>
+    </Box>
   );
 };
 

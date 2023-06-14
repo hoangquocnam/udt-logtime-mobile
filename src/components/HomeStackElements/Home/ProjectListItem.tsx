@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { ProjectDetail } from "../../../interfaces/project";
 import { formatCash, getImageUrl, formatDecimal } from "../../../utils";
 import { useGetReportProject } from "../../../api/report";
 import { format } from "date-fns";
-import {
-  DARK_GRAY,
-  LIGHT_GREEN,
-  LIGHT_YELLOW,
-  SUCCESS,
-  WARNING,
-} from "../../../theme/colors";
+import { DARK_BLUE, SEMI_DARK_BLUE } from "../../../theme/colors";
+import { Box, HStack, Image, Spinner, Text, VStack } from "native-base";
 
 type Props = { item: ProjectDetail; period: string; date: Date };
 
 const ProjectListItem = ({ item, period, date }: Props) => {
-  const { mutateAsync, data: dataReportProject } = useGetReportProject();
+  const {
+    mutateAsync,
+    data: dataReportProject,
+    isLoading,
+  } = useGetReportProject();
 
   useEffect(() => {
     mutateAsync({
@@ -27,109 +26,66 @@ const ProjectListItem = ({ item, period, date }: Props) => {
 
   return (
     <TouchableOpacity>
-      <View style={[styles.container]}>
-        <View style={[styles.logoContainer]}>
-          <Image
-            source={{ uri: getImageUrl(item?.logo) }}
-            style={[styles.logoStyle]}
-          />
-        </View>
-        <View style={[styles?.listContainer]}>
-          <View style={styles.itemContainer}>
-            <Text style={[styles.headerText]}>{"ID:"}</Text>
-            <Text style={styles.valueText}>{item?._id}</Text>
-          </View>
+      <HStack
+        bg={"white"}
+        py={3}
+        px={4}
+        borderRadius={14}
+        h={90}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        space={3}
+        shadow={"sm"}
+      >
+        {isLoading ? (
+          <Box w={"full"}>
+            <Spinner color={DARK_BLUE} />
+          </Box>
+        ) : (
+          <>
+            <HStack flexDir={"row"} alignItems={"center"} space={3} w={"70%"}>
+              <Image
+                source={{ uri: getImageUrl(item?.logo) }}
+                size={63}
+                alt={`image-${item?.name}`}
+                borderRadius={16}
+              />
 
-          <View style={styles.itemContainer}>
-            <Text style={[styles.headerText]}>{"Name:"}</Text>
-            <Text style={styles.valueText}>{item?.name}</Text>
-          </View>
+              <VStack flexShrink={1} space={1}>
+                <Text numberOfLines={2} ellipsizeMode="tail" color={DARK_BLUE}>
+                  {item?.name}
+                </Text>
 
-          <View style={styles.itemContainer}>
-            <Text style={[styles.headerText]}>{"Payment period"}</Text>
-            <Text style={styles.valueText}>{item?.paymentPeriod}</Text>
-          </View>
+                <Text
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                  color={SEMI_DARK_BLUE}
+                >
+                  {formatCash(
+                    dataReportProject?.reportDetail?.totalSalary ?? 0
+                  )}
+                </Text>
+              </VStack>
+            </HStack>
 
-          <View style={styles.divider} />
-
-          <View style={[styles.itemContainer, styles.timeContainer]}>
-            <Text style={[styles.headerText]}>{"Total working time"}</Text>
-            <Text style={[styles.valueText, styles.timeText]}>
-              {formatDecimal(
-                dataReportProject?.reportDetail?.totalWorkingTime ?? 0
-              )}
-            </Text>
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={[styles.itemContainer, styles.priceContainer]}>
-            <Text style={[styles.headerText]}>{"Total salary"}</Text>
-            <Text style={[styles.valueText, styles.priceText]}>
-              {formatCash(dataReportProject?.reportDetail?.totalSalary ?? 0)}
-            </Text>
-          </View>
-        </View>
-      </View>
+            <HStack w={"20%"} alignItems={"center"}>
+              <Text
+                fontSize={14}
+                fontWeight={"bold"}
+                ml={3}
+                color={DARK_BLUE}
+                flex={1}
+              >
+                {formatDecimal(
+                  dataReportProject?.reportDetail?.totalWorkingTime ?? 0
+                ) + " h"}
+              </Text>
+            </HStack>
+          </>
+        )}
+      </HStack>
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: DARK_GRAY,
-  },
-  itemContainer: {
-    marginBottom: 10,
-  },
-  headerText: {
-    fontSize: 15,
-    fontWeight: "bold",
-  },
-  valueText: {},
-  logoContainer: {
-    width: "100%",
-    alignItems: "center",
-  },
-  logoStyle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  listContainer: {
-    justifyContent: "space-between",
-  },
-  reportContainer: {},
-  priceContainer: {
-    backgroundColor: LIGHT_GREEN,
-    padding: 10,
-    borderRadius: 10,
-  },
-  priceText: {
-    color: SUCCESS,
-    fontWeight: "600",
-    fontSize: 15,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: DARK_GRAY,
-    width: "100%",
-    marginVertical: 10,
-  },
-  timeContainer: {
-    backgroundColor: LIGHT_YELLOW,
-    padding: 10,
-    borderRadius: 10,
-  },
-  timeText: {
-    color: WARNING,
-    fontWeight: "600",
-    fontSize: 15,
-  },
-});
 
 export default ProjectListItem;

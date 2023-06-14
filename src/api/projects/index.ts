@@ -9,7 +9,6 @@ type DataProjects = {
 
 const getProjects = async (): Promise<DataProjects> => {
   const auth = await authHeader();
-  console.info("GET", router.projects.listOfUser.value);
   const response = await fetch(router.projects.listOfUser.value, {
     method: "GET",
     headers: auth,

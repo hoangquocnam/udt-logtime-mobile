@@ -1,24 +1,30 @@
 import React, { useMemo, useState } from "react";
 import {
   ActivityIndicator,
-  FlatList,
   ListRenderItem,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   View,
-  Text,
 } from "react-native";
 import { useGetProjects } from "../../api/projects";
 import { ProjectDetail } from "../../interfaces/project";
 import ProjectListItem from "../../components/HomeStackElements/Home/ProjectListItem";
 import TotalSalaryReport from "../../components/HomeStackElements/Home/TotalSalaryReport";
 import t from "../../theme";
-import PeriodSelector from "../../components/HomeStackElements/Home/PeriodSelector";
+import PeriodSelector, {
+  EPeriods,
+} from "../../components/HomeStackElements/Home/PeriodSelector";
+import { Box, Text, ScrollView, FlatList, VStack } from "native-base";
+import {
+  BACKGROUND,
+  DARK_BLUE,
+  LIGHT_BLUE,
+  SEMI_DARK_BLUE,
+} from "../../theme/colors";
 
 function HomeScreen() {
   const { data: dataProjects, isLoading: isLoadingProjects } = useGetProjects();
-  const [currentPeriod, setCurrentPeriod] = useState("week");
+  const [currentPeriod, setCurrentPeriod] = useState(EPeriods.MONTH);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const isLoading = useMemo(() => {
@@ -42,7 +48,7 @@ function HomeScreen() {
   };
 
   const onChangePeriod = (period: string) => {
-    setCurrentPeriod(period);
+    setCurrentPeriod(period as EPeriods);
   };
 
   const onChangeDate = (date: Date) => {
@@ -50,17 +56,23 @@ function HomeScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.itemContainer, t.mB4]}>
+    <Box style={styles.container} backgroundColor={BACKGROUND}>
+      <Box
+        style={[styles.itemContainer]}
+        backgroundColor={BACKGROUND}
+        p={5}
+        borderBottomWidth={1}
+        borderBottomColor={LIGHT_BLUE}
+      >
         <PeriodSelector
           onChange={onChangePeriod}
           onChangeDate={onChangeDate}
           date={selectedDate}
         />
-      </View>
+      </Box>
 
-      <ScrollView>
-        <View>
+      <ScrollView backgroundColor={BACKGROUND} py={2}>
+        <Box px={5}>
           <View style={styles.itemContainer}>
             <TotalSalaryReport
               projects={dataProjects?.projects}
@@ -71,7 +83,7 @@ function HomeScreen() {
 
           <View style={[t.h0_5, t.bgGray400, t.mY8]} />
 
-          <View style={[t.mB5, styles.itemContainer]}>
+          <VStack style={[t.mB5, styles.itemContainer]} space={3}>
             <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
               Projects
             </Text>
@@ -81,10 +93,10 @@ function HomeScreen() {
               ItemSeparatorComponent={ItemSeparator}
               style={{ flex: 1, height: "100%" }}
             />
-          </View>
-        </View>
+          </VStack>
+        </Box>
       </ScrollView>
-    </View>
+    </Box>
   );
 }
 
@@ -92,7 +104,6 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     flex: 1,
     backgroundColor: "white",
   },

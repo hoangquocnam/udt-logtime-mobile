@@ -6,9 +6,10 @@ import { Text, TouchableOpacity, View } from "react-native";
 import appRoutes from "./routes";
 import LoginScreen from "../screens/AuthStack/LoginScreen";
 import HomeScreen from "../screens/HomeStack/HomeScreen";
-import { PRIMARY } from "../theme/colors";
+import { DARK_BLUE } from "../theme/colors";
 import t from "../theme";
 import { Observer } from "mobx-react";
+import LocalStorage from "../store/localStorage";
 
 const AppStackNavigator = createStackNavigator();
 const AuthStackNavigator = createStackNavigator();
@@ -16,8 +17,10 @@ const BottomTabNavigator = createBottomTabNavigator();
 
 const MainNavigation = () => {
   const navigation = useNavigation<any>();
+  const storage = LocalStorage.getInstance();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await storage.clear();
     navigation.navigate(appRoutes.Auth.value);
   };
 
@@ -28,7 +31,7 @@ const MainNavigation = () => {
           headerRight: () => {
             return (
               <TouchableOpacity style={[t.mR5]} onPress={handleLogout}>
-                <MaterialIcons name={"logout"} size={20} color={PRIMARY} />
+                <MaterialIcons name={"logout"} size={20} color={DARK_BLUE} />
               </TouchableOpacity>
             );
           },
@@ -41,7 +44,7 @@ const MainNavigation = () => {
                 return <Ionicons name="ios-home" size={size} color={color} />;
             }
           },
-          tabBarActiveTintColor: PRIMARY,
+          tabBarActiveTintColor: DARK_BLUE,
           tabBarLabelStyle: {
             fontSize: 12,
             fontWeight: "600",

@@ -1,20 +1,11 @@
 export const PRIMARY = "purple";
-export const GRAY = "#a5a8b5";
 export const WHITE = "#FFFFFF";
 export const ERROR = "#FF5A5F";
 export const SUCCESS = "#00a699";
 export const WARNING = "#f0ad4e";
 export const INFO = "#5bc0de";
-export const BLACK = "#000000";
-export const DARK_GRAY = "#333333";
-export const LIGHT_GRAY = "#f2f2f2";
-export const LIGHTER_GRAY = "#fafafa";
-export const DARKER_GRAY = "#e6e6e6";
-export const LIGHT_PURPLE = "#e6e6ff";
-export const LIGHT_GREEN = "#e6ffe6";
-export const LIGHT_RED = "#ffe6e6";
-export const LIGHT_YELLOW = "#ffffe6";
 
+export const BACKGROUND = "#F5F7FA";
 export const LIGHT_BLUE = "#DCE8F5";
 export const DARK_BLUE = "#283B51";
 export const SEMI_DARK_BLUE = "#446388";

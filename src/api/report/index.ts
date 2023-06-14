@@ -20,7 +20,6 @@ const getReportProject = async (
   body: BodyReportTimesheet
 ): Promise<DataReportTimesheet> => {
   const auth = await authHeader();
-  console.info("POST", router.projects.listOfUser.value);
   const response = await fetch(router.reports.report.detail.value, {
     method: "POST",
     headers: auth,

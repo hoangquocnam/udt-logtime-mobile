@@ -28,7 +28,6 @@ export const usePostLogin = ({ onError }) => {
     IUserLogin
   >(
     (payload: IUserLogin) => {
-      console.info("POST", router.login.value);
       return postLogin(payload.email, payload.password);
     },
     {
