@@ -10,7 +10,7 @@ import {
 } from "./styles";
 import { Controller, useFormContext } from "react-hook-form";
 import { Input, Text, FormControl } from "native-base";
-import { DARK_BLUE, LIGHT_BLUE, SEMI_DARK_BLUE } from "../../theme/colors";
+import { DARK_BLUE, LIGHT_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
 
 type CustomTextInputProps = {
   name: string;

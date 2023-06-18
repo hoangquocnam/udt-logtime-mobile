@@ -5,10 +5,10 @@ import {
   TouchableOpacity,
   Easing,
 } from "react-native";
-import t from "../../../theme";
+import t from "@/theme";
 import React, { useEffect, useRef, useContext } from "react";
-import { ToastContext } from "../../../context/toast.context";
-import { PRIMARY } from "../../../theme/colors";
+import { ToastContext } from "@/context/toast.context";
+import { PRIMARY } from "@/theme/colors";
 
 const PopOutTime = 2 * 100;
 const AutoDuration = 300;

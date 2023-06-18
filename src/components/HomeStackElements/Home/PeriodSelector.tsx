@@ -1,10 +1,10 @@
 import SelectDropdown from "react-native-select-dropdown";
-import { BACKGROUND, DARK_BLUE, LIGHT_BLUE } from "../../../theme/colors";
+import { BACKGROUND, DARK_BLUE, LIGHT_BLUE } from "@/theme/colors";
 import { AntDesign } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import FormDateTimePicker from "../../UI/FormDatePicker";
 import { TouchableNativeFeedback, View } from "react-native";
-import t from "../../../theme";
+import t from "@/theme";
 import { format } from "date-fns";
 import { Box } from "native-base";
 

@@ -1,11 +1,11 @@
-import t from "../../theme";
+import t from "@/theme";
 
-import { GRAY, PRIMARY } from "../../theme/colors";
+import { PRIMARY } from "@/theme/colors";
 export const inputStyles = [
   t.roundedSm,
   t.pX5,
   t.pY4,
-  { borderWidth: 1, borderColor: GRAY },
+  { borderWidth: 1 },
   t.wFull,
   t.fontSansMedium,
 ];

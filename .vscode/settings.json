@@ -2,5 +2,6 @@
   "cSpell.words": [
     "Timesheet",
     "timesheets"
-  ]
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native";
-import { ProjectDetail } from "../../../interfaces/project";
-import { formatCash, getImageUrl, formatDecimal } from "../../../utils";
-import { useGetReportProject } from "../../../api/report";
+import { ProjectDetail } from "@/interfaces/project";
+import { formatCash, getImageUrl, formatDecimal } from "@/utils";
+import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
-import { DARK_BLUE, SEMI_DARK_BLUE } from "../../../theme/colors";
+import { DARK_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
 import { Box, HStack, Image, Spinner, Text, VStack } from "native-base";
 
 type Props = { item: ProjectDetail; period: string; date: Date };

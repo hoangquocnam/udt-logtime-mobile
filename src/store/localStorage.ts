@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type StorageValue = string | null;
+type StorageValue = string | null | undefined;
 
 class LocalStorage {
   private static instance: LocalStorage;
@@ -14,7 +14,8 @@ class LocalStorage {
   }
 
   async setItem(key: string, value: StorageValue) {
-    return AsyncStorage.setItem(key, value);
+    const jsonValue = JSON.stringify(value);
+    return AsyncStorage.setItem(key, jsonValue);
   }
 
   async getItem(key: string) {

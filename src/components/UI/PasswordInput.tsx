@@ -2,8 +2,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { TextInput, View, ViewProps, TouchableOpacity } from "react-native";
-import t from "../../theme";
-import { DARK_BLUE, LIGHT_BLUE, PRIMARY, SEMI_DARK_BLUE } from "../../theme/colors";
+import t from "@/theme";
+import { DARK_BLUE, LIGHT_BLUE, PRIMARY, SEMI_DARK_BLUE } from "@/theme/colors";
 import {
   focusInputStyle,
   inputErrorStyle,

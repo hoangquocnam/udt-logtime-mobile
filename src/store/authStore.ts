@@ -16,7 +16,7 @@ class AuthStore {
     });
   }
 
-  setUser(user: IUserState) {
+  setUser(user: IUserState | null) {
     this.user = user;
   }
 }

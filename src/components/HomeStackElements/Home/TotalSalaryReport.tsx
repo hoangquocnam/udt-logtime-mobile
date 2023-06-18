@@ -1,14 +1,14 @@
 import { StyleSheet } from "react-native";
-import { ProjectDetail } from "../../../interfaces/project";
-import { formatCash, formatDecimal } from "../../../utils";
-import { useGetReportProject } from "../../../api/report";
+import { ProjectDetail } from "@/interfaces/project";
+import { formatCash, formatDecimal } from "@/utils";
+import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
 import {
   DARK_BLUE,
   SEMI_DARK_BLUE,
   SUCCESS,
   WARNING,
-} from "../../../theme/colors";
+} from "@/theme/colors";
 import { useEffect, useState } from "react";
 import { Box, Button, HStack, Spinner, Stack, Text, VStack } from "native-base";
 import { Feather, Ionicons } from "@expo/vector-icons";

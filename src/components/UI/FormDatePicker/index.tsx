@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { View, FlatListProps } from "react-native";
 import WheelPicker from "react-native-wheely";
 import moment from "moment";
-import t from "../../../theme";
-import { LIGHT_BLUE, SEMI_DARK_BLUE } from "../../../theme/colors";
+import t from "@/theme";
+import { LIGHT_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
 
 type FormDateTimePickerProps = {
   onChange?: (date: Date) => void;
