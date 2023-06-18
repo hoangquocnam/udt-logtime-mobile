@@ -26,4 +26,8 @@ export interface ProjectDetail {
   requiredTag: boolean;
   isPastLock: boolean;
   canOverlap: boolean;
+  countryId: {
+    _id: string;
+    value: string;
+  }
 }

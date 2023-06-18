@@ -24,8 +24,11 @@ export type MainParamListNavigationProps =
   NativeStackNavigationProp<MainParamList>;
 
 export type ProjectParamList = {
-  List: undefined;
-  Detail: undefined;
+  ProjectList: undefined;
+  ProjectDetail: {
+    id: string;
+    logo?: string;
+  };
 };
 
 export type ProjectParamListNavigationProps =

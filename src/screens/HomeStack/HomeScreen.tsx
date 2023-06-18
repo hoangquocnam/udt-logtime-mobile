@@ -74,7 +74,7 @@ function HomeScreen() {
         />
       </Box>
 
-      <ScrollView backgroundColor={BACKGROUND} py={2}>
+      <ScrollView backgroundColor={BACKGROUND} py={2} pt={8}>
         <Box px={5}>
           <View style={styles.itemContainer}>
             <TotalSalaryReport

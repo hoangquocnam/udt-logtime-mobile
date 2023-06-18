@@ -28,5 +28,8 @@ export const router = {
     listOfUser: {
       value: `${API_URL}/projects/list-of-user`,
     },
+    detail: {
+      value: (id: string) => `${API_URL}/projects/detail-of-user/${id}`,
+    },
   },
 };

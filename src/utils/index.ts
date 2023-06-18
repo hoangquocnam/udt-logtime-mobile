@@ -18,7 +18,7 @@ export function getFullName(
   return nameArray.join(" ");
 }
 
-export const getImageUrl = (image: string) => {
+export const getImageUrl = (image?: string) => {
   return image
     ? `${COMPANY_URL}/images/${image}`
     : `https://via.placeholder.com/150`;

@@ -6,15 +6,34 @@ import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
 import { DARK_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
 import { Box, HStack, Image, Spinner, Text, VStack } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import {
+  ProjectParamListNavigationProps,
+  RootParamListNavigationProps,
+} from "@/navigation/ParamList";
+import routes from "@/navigation/routes";
 
 type Props = { item: ProjectDetail; period: string; date: Date };
 
 const ProjectListItem = ({ item, period, date }: Props) => {
+  const navigation = useNavigation<
+    RootParamListNavigationProps & ProjectParamListNavigationProps
+  >();
   const {
     mutateAsync,
     data: dataReportProject,
     isLoading,
   } = useGetReportProject();
+
+  const goToProjectDetail = () => {
+    navigation.navigate(routes.root.project, {
+      screen: routes.project.detail,
+      params: {
+        id: item?._id,
+        logo: item?.logo,
+      },
+    });
+  };
 
   useEffect(() => {
     mutateAsync({
@@ -25,7 +44,7 @@ const ProjectListItem = ({ item, period, date }: Props) => {
   }, [item, period, date]);
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={goToProjectDetail}>
       <HStack
         bg={"white"}
         py={3}
