@@ -14,7 +14,7 @@ class LocalStorage {
   }
 
   async setItem(key: string, value: StorageValue) {
-    const jsonValue = JSON.stringify(value);
+    const jsonValue = value || "";
     return AsyncStorage.setItem(key, jsonValue);
   }
 
