@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { useStores } from "@/hooks/useStores";
-import { Box, HStack, Image, ScrollView, Text, VStack } from "native-base";
+import { HStack, Image, ScrollView, Text, VStack } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProjectParamList } from "@/navigation/ParamList";
 import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
-import { BACKGROUND, DARK_BLUE, LIGHT_BLUE } from "@/theme/colors";
+import { BACKGROUND, DARK_BLUE } from "@/theme/colors";
 import { ActivityIndicator, RefreshControl, SafeAreaView } from "react-native";
 import BackIcon from "@/components/UI/Icon/BackIcon";
 import { getImageUrl } from "@/utils";
@@ -18,8 +17,7 @@ import ReportList from "@/components/ProjecScreenElements/ReportList";
 type Props = NativeStackScreenProps<ProjectParamList, "ProjectDetail">;
 
 const ProjectDetailScreen = (props: Props) => {
-  const { authStore } = useStores();
-  const [date, setDate] = React.useState<Date | undefined>(undefined);
+  const [date] = React.useState<Date | undefined>(undefined);
   const { route } = props;
   const { id, logo } = route.params;
 
@@ -113,7 +111,7 @@ const ProjectDetailScreen = (props: Props) => {
             />
           </VStack>
 
-          <VStack space={5} w="full" p={5} bg="white" borderRadius={14}>
+          <VStack space={5} w="full" px={5} bg="white" borderRadius={14}>
             <ReportList
               data={dataReportProject?.timesheets?.hourly}
               projectId={id}
@@ -129,7 +127,7 @@ export default ProjectDetailScreen;
 
 export const screenOptions = {
   headerShown: true,
-  title: "",
+  title: "Monthly Report",
   headerBackImage: () => <BackIcon />,
   headerBackTitle: "",
 };

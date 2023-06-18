@@ -7,14 +7,13 @@ import {
   Divider,
   Skeleton,
 } from "native-base";
-import React, { useEffect, useMemo, useState } from "react";
-import * as DateFns from "date-fns";
+import React, { useEffect, useState } from "react";
 import { Hourly } from "@/interfaces/report";
-import { checkValidArray, getValidArray } from "@/utils";
-import { ListRenderItem } from "react-native";
+import { checkValidArray, formatCash } from "@/utils";
+import { ListRenderItem, TouchableOpacity } from "react-native";
 import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
-import { SEMI_DARK_BLUE } from "@/theme/colors";
+import { DARK_BLUE } from "@/theme/colors";
 
 type Props = {
   data?: Hourly[];
@@ -34,19 +33,64 @@ type WeekReportProps = {
 };
 
 const ReportDetailItem = (props: Hourly) => {
-  const { taskName, workingTime } = props;
+  const { taskName, workingTime, description, startTime, endTime, salary } =
+    props;
+  const [isShowDescription, setIsShowDescription] = useState(false);
   return (
-    <HStack w={"full"} flex={1} justifyContent="space-between" space={3} py={5}>
-      <VStack flex={1} alignItems="flex-start" w={"full"}>
-        <Text w={"full"} numberOfLines={2} fontSize={14}>
-          {taskName}
-        </Text>
-      </VStack>
+    <TouchableOpacity onPress={() => setIsShowDescription(!isShowDescription)}>
+      <VStack w={"full"} alignItems="flex-start" space={2} py={5}>
+        <HStack w={"full"} flex={1} justifyContent="space-between" space={3}>
+          <VStack flex={1} alignItems="flex-start" w={"full"}>
+            <Text w={"full"} numberOfLines={2} fontSize={14}>
+              {taskName}
+            </Text>
+          </VStack>
 
-      <Box alignItems="flex-end" w={10}>
-        <Text color={SEMI_DARK_BLUE}>{workingTime}</Text>
-      </Box>
-    </HStack>
+          <Box alignItems="flex-end" w={10}>
+            <Text color={"darkBlue.700"} fontSize={18}>
+              {workingTime}
+            </Text>
+          </Box>
+        </HStack>
+
+        <HStack
+          w={"full"}
+          flex={1}
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <HStack flex={1} space={3} py={5} divider={<Divider bg="gray.500" />}>
+            <Box bg="success.100" borderRadius={5} px={2} py={1}>
+              <Text fontSize={14} color={"success.700"}>
+                {format(new Date(startTime), "HH:mm")}
+              </Text>
+            </Box>
+
+            <Box bg="danger.100" borderRadius={5} px={2} py={1}>
+              <Text fontSize={14} color={"danger.700"}>
+                {format(new Date(endTime), "HH:mm")}
+              </Text>
+            </Box>
+          </HStack>
+
+          <Box alignItems="flex-end" w={10} flex={1}>
+            <Text color={"info.700"}>{formatCash(salary)}</Text>
+          </Box>
+        </HStack>
+
+        {isShowDescription ? (
+          <Text
+            fontSize={14}
+            color={DARK_BLUE}
+            w={"full"}
+            textAlign={"left"}
+            mb={5}
+          >
+            {description}
+          </Text>
+        ) : null}
+      </VStack>
+    </TouchableOpacity>
   );
 };
 
@@ -78,11 +122,6 @@ const WeekReport = ({ week, projectId }: WeekReportProps) => {
   if (isLoadingReport) {
     return <Skeleton h="40" />;
   }
-
-  console.log(
-    "dataReportProject " + `${projectId}-${week.index.toString()}`,
-    checkValidArray(dataReportProject?.timesheets?.hourly)
-  );
 
   return (
     <VStack space={5} w="full">
