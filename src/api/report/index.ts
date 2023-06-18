@@ -35,8 +35,8 @@ const getReportProject = async (
   return responseJson.data;
 };
 
-export const useGetReportProject = () => {
+export const useGetReportProject = (key?: string) => {
   return useMutation((body: BodyReportTimesheet) => getReportProject(body), {
-    mutationKey: ["report", "project"],
+    mutationKey: ["report", "project", key],
   });
 };

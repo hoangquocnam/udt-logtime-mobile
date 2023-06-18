@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
+  RefreshControl,
 } from "react-native";
 import { useGetProjects } from "@/api/projects";
 import { ProjectDetail } from "@/interfaces/project";
@@ -21,7 +22,12 @@ import { RootParamListNavigationProps } from "@/navigation/ParamList";
 import routes from "@/navigation/routes";
 
 function HomeScreen() {
-  const { data: dataProjects, isLoading: isLoadingProjects } = useGetProjects();
+  const {
+    data: dataProjects,
+    isLoading: isLoadingProjects,
+    refetch: refetchProjects,
+    isRefetching: isRefetchingProjects,
+  } = useGetProjects();
   const [currentPeriod, setCurrentPeriod] = useState(EPeriods.MONTH);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const navigation = useNavigation<RootParamListNavigationProps>();
@@ -74,19 +80,37 @@ function HomeScreen() {
         />
       </Box>
 
-      <ScrollView backgroundColor={BACKGROUND} py={2} pt={8}>
+      <ScrollView
+        backgroundColor={BACKGROUND}
+        pt={8}
+        flex={1}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetchingProjects}
+            onRefresh={refetchProjects}
+            colors={[SEMI_DARK_BLUE]}
+          />
+        }
+      >
         <Box px={5}>
           <View style={styles.itemContainer}>
             <TotalSalaryReport
               projects={dataProjects?.projects || []}
               period={currentPeriod}
               date={selectedDate}
+              isRefresh={isRefetchingProjects}
             />
           </View>
 
           <View style={[t.h0_5, t.bgGray400, t.mY8]} />
 
-          <VStack style={[t.mB5, styles.itemContainer]} space={3}>
+          <VStack
+            style={[t.mB5, styles.itemContainer]}
+            space={3}
+            flex={1}
+            pb={10}
+            h={"100%"}
+          >
             <HStack
               w="100%"
               alignItems={"baseline"}

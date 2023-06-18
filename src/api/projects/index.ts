@@ -31,6 +31,8 @@ export const useGetProjects = () => {
       onError: (error) => {
         console.error("useGetProjects", error);
       },
+      refetchOnMount: "always",
+      keepPreviousData: true,
     }
   );
 };
@@ -55,7 +57,7 @@ const getProject = async (id: string): Promise<ProjectDetail> => {
 
 export const useGetProject = (id: string) => {
   return useQuery<ProjectDetail, Error>(
-    [router.projects.listOfUser.value],
+    [router.projects.detail.value(id)],
     () => getProject(id),
     {
       onError: (error) => {

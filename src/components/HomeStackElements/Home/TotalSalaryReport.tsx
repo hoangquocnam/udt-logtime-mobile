@@ -3,12 +3,7 @@ import { ProjectDetail } from "@/interfaces/project";
 import { formatCash, formatDecimal } from "@/utils";
 import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
-import {
-  DARK_BLUE,
-  SEMI_DARK_BLUE,
-  SUCCESS,
-  WARNING,
-} from "@/theme/colors";
+import { DARK_BLUE, SEMI_DARK_BLUE, SUCCESS, WARNING } from "@/theme/colors";
 import { useEffect, useState } from "react";
 import { Box, Button, HStack, Spinner, Stack, Text, VStack } from "native-base";
 import { Feather, Ionicons } from "@expo/vector-icons";
@@ -17,9 +12,10 @@ type Props = {
   projects: ProjectDetail[];
   period: string;
   date: Date;
+  isRefresh?: boolean;
 };
 
-const TotalSalaryReport = ({ projects, period, date }: Props) => {
+const TotalSalaryReport = ({ projects, period, date, isRefresh }: Props) => {
   const { mutateAsync, isLoading } = useGetReportProject();
   const [totalSalary, setTotalSalary] = useState(0);
   const [totalWorkingTime, setTotalWorkingTime] = useState(0);
@@ -54,7 +50,7 @@ const TotalSalaryReport = ({ projects, period, date }: Props) => {
       setTotalSalary(total);
       setTotalWorkingTime(totalWorkingTime);
     });
-  }, [projects, period, date]);
+  }, [projects, period, date, isRefresh]);
 
   return (
     <VStack

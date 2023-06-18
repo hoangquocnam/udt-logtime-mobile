@@ -6,13 +6,14 @@ import { ProjectParamList } from "@/navigation/ParamList";
 import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
 import { BACKGROUND, DARK_BLUE, LIGHT_BLUE } from "@/theme/colors";
-import { ActivityIndicator, SafeAreaView } from "react-native";
+import { ActivityIndicator, RefreshControl, SafeAreaView } from "react-native";
 import BackIcon from "@/components/UI/Icon/BackIcon";
 import { getImageUrl } from "@/utils";
 import PriceBox from "@/components/ProjecScreenElements/PriceBox";
 import TimeBox from "@/components/ProjecScreenElements/TimeBox";
-import ProjectReportDetailForm from "@/components/ProjecScreenElements/ReportDetailForm";
+import ProjectReportDetailForm from "@/components/ProjecScreenElements/ProjectDetailForm";
 import { useGetProject } from "@/api/projects";
+import ReportList from "@/components/ProjecScreenElements/ReportList";
 
 type Props = NativeStackScreenProps<ProjectParamList, "ProjectDetail">;
 
@@ -22,7 +23,12 @@ const ProjectDetailScreen = (props: Props) => {
   const { route } = props;
   const { id, logo } = route.params;
 
-  const { data: dataProject, isLoading: isLoadingProject } = useGetProject(id);
+  const {
+    data: dataProject,
+    isLoading: isLoadingProject,
+    refetch,
+    isRefetching,
+  } = useGetProject(id);
 
   const {
     mutateAsync,
@@ -52,10 +58,26 @@ const ProjectDetailScreen = (props: Props) => {
     );
   }
 
+  const onRefresh = () => {
+    refetch();
+  };
+
   return (
     <VStack h="full" bg={BACKGROUND}>
-      <ScrollView px={5} py={5}>
-        <VStack space={5}>
+      <ScrollView
+        px={5}
+        py={5}
+        flex={1}
+        mb={10}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={onRefresh}
+            tintColor={DARK_BLUE}
+          />
+        }
+      >
+        <VStack space={5} flex={1} pb={10}>
           <VStack w="full" alignItems={"center"} space={5}>
             <Image
               source={{ uri: getImageUrl(logo) }}
@@ -88,6 +110,13 @@ const ProjectDetailScreen = (props: Props) => {
             <ProjectReportDetailForm
               reportDetail={dataReportProject?.reportDetail}
               projectDetail={dataProject}
+            />
+          </VStack>
+
+          <VStack space={5} w="full" p={5} bg="white" borderRadius={14}>
+            <ReportList
+              data={dataReportProject?.timesheets?.hourly}
+              projectId={id}
             />
           </VStack>
         </VStack>

@@ -1,6 +1,6 @@
 import { VStack, HStack, Text } from "native-base";
 import React from "react";
-
+import { SEMI_DARK_BLUE } from "@/theme/colors";
 import { ReportDetail } from "@/interfaces/report";
 import { formatCash } from "@/utils";
 import { ProjectDetail } from "@/interfaces/project";
@@ -18,9 +18,11 @@ type ReportDetailItemProps = {
 const ReportDetailItem = (props: ReportDetailItemProps) => {
   const { label, value } = props;
   return (
-    <HStack justifyContent="space-between">
-      <Text>{label}</Text>
-      <Text>{value}</Text>
+    <HStack justifyContent="space-between" alignItems="center">
+      <Text fontSize={16}>{label}</Text>
+      <Text fontSize={14} color={SEMI_DARK_BLUE}>
+        {value}
+      </Text>
     </HStack>
   );
 };

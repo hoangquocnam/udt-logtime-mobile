@@ -160,7 +160,7 @@ export const checkValidArray = <T>(array: T[] | null | undefined): boolean => {
   return array ? Array.isArray(array) && array.length > 0 : false;
 };
 
-export const getValidArray = <T>(array: T[]): T[] => {
+export const getValidArray = <T>(array?: T[]): T[] => {
   return checkValidArray(array) ? array || [] : [];
 };
 
