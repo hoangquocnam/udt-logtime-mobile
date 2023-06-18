@@ -10,12 +10,13 @@ import { getImageUrl } from "@/utils";
 import { useStores } from "@/hooks/useStores";
 import { Avatar, HStack, VStack, Text } from "native-base";
 import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
-import { MainParamList } from "../ParamList";
+import { MainParamList, MainParamListNavigationProps } from "../ParamList";
+import CustomBottomTab from "../UI/BottomTab";
 
 const BottomTabNavigator = createBottomTabNavigator<MainParamList>();
 
 const MainNavigation = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<MainParamListNavigationProps>();
   const storage = LocalStorage.getInstance();
   const { authStore } = useStores();
 
@@ -55,20 +56,6 @@ const MainNavigation = () => {
         return {
           headerRight: HeaderRight,
           headerLeft: HeaderLeft,
-          tabBarIcon: ({ size, focused, color }) => {
-            switch (route.name) {
-              case appRoutes.main.home:
-                return <AntDesign name="home" size={size} color={color} />;
-
-              default:
-                return <Ionicons name="ios-home" size={size} color={color} />;
-            }
-          },
-          tabBarActiveTintColor: DARK_BLUE,
-          tabBarLabelStyle: {
-            fontSize: 12,
-            fontWeight: "600",
-          },
           headerStyle: {
             height: 100,
             shadowColor: "#000",
@@ -77,6 +64,7 @@ const MainNavigation = () => {
           headerShadowVisible: true,
         };
       }}
+      tabBar={(props) => <CustomBottomTab {...props} />}
     >
       <BottomTabNavigator.Screen
         name={appRoutes.main.home}

@@ -9,3 +9,4 @@ export const BACKGROUND = "#F5F7FA";
 export const LIGHT_BLUE = "#DCE8F5";
 export const DARK_BLUE = "#283B51";
 export const SEMI_DARK_BLUE = "#446388";
+export const YELLOW = "#FFCD1C";
