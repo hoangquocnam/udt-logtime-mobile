@@ -1,7 +1,7 @@
 import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import LoginForm from "../../../components/AuthScreenElements/LoginForm";
+import LoginForm from "@/components/AuthScreenElements/LoginForm";
 
 const LoginScreen = () => {
   return (

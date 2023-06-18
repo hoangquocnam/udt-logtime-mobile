@@ -6,26 +6,25 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { useGetProjects } from "../../api/projects";
-import { ProjectDetail } from "../../interfaces/project";
-import ProjectListItem from "../../components/HomeStackElements/Home/ProjectListItem";
-import TotalSalaryReport from "../../components/HomeStackElements/Home/TotalSalaryReport";
-import t from "../../theme";
+import { useGetProjects } from "@/api/projects";
+import { ProjectDetail } from "@/interfaces/project";
+import ProjectListItem from "@/components/HomeStackElements/Home/ProjectListItem";
+import TotalSalaryReport from "@/components/HomeStackElements/Home/TotalSalaryReport";
+import t from "@/theme";
 import PeriodSelector, {
   EPeriods,
-} from "../../components/HomeStackElements/Home/PeriodSelector";
-import { Box, Text, ScrollView, FlatList, VStack } from "native-base";
-import {
-  BACKGROUND,
-  DARK_BLUE,
-  LIGHT_BLUE,
-  SEMI_DARK_BLUE,
-} from "../../theme/colors";
+} from "@/components/HomeStackElements/Home/PeriodSelector";
+import { Box, Text, ScrollView, FlatList, VStack, HStack } from "native-base";
+import { BACKGROUND, LIGHT_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
+import { useNavigation } from "@react-navigation/native";
+import { RootParamListNavigationProps } from "@/navigation/ParamList";
+import routes from "@/navigation/routes";
 
 function HomeScreen() {
   const { data: dataProjects, isLoading: isLoadingProjects } = useGetProjects();
   const [currentPeriod, setCurrentPeriod] = useState(EPeriods.MONTH);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const navigation = useNavigation<RootParamListNavigationProps>();
 
   const isLoading = useMemo(() => {
     return isLoadingProjects;
@@ -55,6 +54,10 @@ function HomeScreen() {
     setSelectedDate(date);
   };
 
+  const goToProjectList = () => {
+    navigation.navigate(routes.root.project);
+  };
+
   return (
     <Box style={styles.container} backgroundColor={BACKGROUND}>
       <Box
@@ -75,7 +78,7 @@ function HomeScreen() {
         <Box px={5}>
           <View style={styles.itemContainer}>
             <TotalSalaryReport
-              projects={dataProjects?.projects}
+              projects={dataProjects?.projects || []}
               period={currentPeriod}
               date={selectedDate}
             />
@@ -84,9 +87,17 @@ function HomeScreen() {
           <View style={[t.h0_5, t.bgGray400, t.mY8]} />
 
           <VStack style={[t.mB5, styles.itemContainer]} space={3}>
-            <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
-              Projects
-            </Text>
+            <HStack
+              w="100%"
+              alignItems={"baseline"}
+              justifyContent="space-between"
+            >
+              <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
+                Projects
+              </Text>
+
+              <Text onPress={goToProjectList}>See all</Text>
+            </HStack>
             <FlatList<ProjectDetail>
               data={dataProjects?.projects}
               renderItem={renderItem}

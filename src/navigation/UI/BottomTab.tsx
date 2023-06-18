@@ -37,8 +37,6 @@ const CustomBottomTab = ({ state, descriptors, navigation }) => {
           }
         };
 
-        console.log(route.name);
-
         let iconName;
         let iconType = "custom";
         let label;

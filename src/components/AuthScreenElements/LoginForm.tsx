@@ -16,7 +16,7 @@ import { NormalTextInput } from "../UI/TextInput";
 import useToast from "@/hooks/useToast";
 import { IUserLogin } from "@/interfaces/user";
 import { useMe, usePostLogin } from "@/api/auth";
-import appRoutes from "@/navigation/routes";
+import routes from "@/navigation/routes";
 import LocalStorage from "@/store/localStorage";
 import { Button, Text, VStack } from "native-base";
 import { useStores } from "@/hooks/useStores";

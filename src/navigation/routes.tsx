@@ -12,7 +12,7 @@ type KeyOfProjectParamList = KeyOf<ProjectParamList>;
 type KeyOfAuthParamList = KeyOf<AuthParamList>;
 type KeyOfRootParamList = KeyOf<RootParamList>;
 
-const appRoutes = {
+const routes = {
   root: {
     value: "Root",
     auth: "Auth" as KeyOfRootParamList,
@@ -34,4 +34,4 @@ const appRoutes = {
   },
 };
 
-export default appRoutes;
+export default routes;

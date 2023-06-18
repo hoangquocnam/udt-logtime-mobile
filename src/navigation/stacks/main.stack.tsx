@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
-import appRoutes from "../routes";
+import routes from "../routes";
 import HomeScreen from "@/screens/HomeStack/HomeScreen";
 import { DARK_BLUE } from "@/theme/colors";
 import t from "@/theme";
@@ -67,7 +67,7 @@ const MainNavigation = () => {
       tabBar={(props) => <CustomBottomTab {...props} />}
     >
       <BottomTabNavigator.Screen
-        name={appRoutes.main.home}
+        name={routes.main.home}
         component={HomeScreen}
       />
     </BottomTabNavigator.Navigator>

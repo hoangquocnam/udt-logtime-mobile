@@ -1,13 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import appRoutes from "./routes";
+import routes from "./routes";
 import { Observer, observer } from "mobx-react";
 import { useMemo } from "react";
 import { useStores } from "../hooks/useStores";
 import { RootParamList } from "./ParamList";
-import MainNavigation from "./stacks/main";
-import AuthNavigation from "./stacks/auth";
-import ProjectNavigation from "./stacks/project";
+import MainNavigation from "./stacks/main.stack";
+import AuthNavigation from "./stacks/auth.stack";
+import ProjectNavigation from "./stacks/project.stack";
 
 const AppStackNavigator = createStackNavigator<RootParamList>();
 
@@ -25,7 +25,7 @@ const AppNavigation = () => {
     if (!authStore?.user) {
       return (
         <AppStackNavigator.Screen
-          name={appRoutes.root.auth}
+          name={routes.root.auth}
           component={AuthNavigation}
         />
       );
@@ -33,11 +33,11 @@ const AppNavigation = () => {
     return (
       <>
         <AppStackNavigator.Screen
-          name={appRoutes.root.main}
+          name={routes.root.main}
           component={MainNavigation}
         />
         <AppStackNavigator.Screen
-          name={appRoutes.root.project}
+          name={routes.root.project}
           component={ProjectNavigation}
         />
       </>
