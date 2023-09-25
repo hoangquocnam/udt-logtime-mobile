@@ -29,5 +29,17 @@ export interface ProjectDetail {
   countryId: {
     _id: string;
     value: string;
-  }
+  };
+  isActive?: boolean;
+  isArchived?: boolean;
+  price?: number;
+  createdBy?: string;
+  rateExchange?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
+  updatedBy?: string;
+  diagramNodeId?: string;
+  color?: string;
+  isTimesheetSupervisorDailyReminderEnabled?: boolean;
 }

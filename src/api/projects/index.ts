@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { router } from "../router";
-import { authHeader } from "..";
+import { get } from "..";
 import { ProjectDetail } from "../../interfaces/project";
 
 type DataProjects = {
@@ -8,19 +8,13 @@ type DataProjects = {
 };
 
 const getProjects = async (): Promise<DataProjects> => {
-  const auth = await authHeader();
-  const response = await fetch(router.projects.listOfUser.value, {
-    method: "GET",
-    headers: auth,
-  });
-  const responseJson: Awaited<{
-    message: string;
-    data: DataProjects;
-  }> = await response.json();
-  if (response.status !== 200) {
-    throw new Error(responseJson.message);
+  const response = await get<{ data: DataProjects }>(
+    router.projects.listOfUser.value
+  );
+  if (response.error) {
+    throw new Error(response.error);
   }
-  return responseJson.data;
+  return response.data;
 };
 
 export const useGetProjects = () => {
@@ -38,21 +32,15 @@ export const useGetProjects = () => {
 };
 
 const getProject = async (id: string): Promise<ProjectDetail> => {
-  const auth = await authHeader();
-  const response = await fetch(router.projects.detail.value(id), {
-    method: "GET",
-    headers: auth,
-  });
-  const responseJson: Awaited<{
-    message: string;
+  const response = await get<{
     data: {
       project: ProjectDetail;
     };
-  }> = await response.json();
-  if (response.status !== 200) {
-    throw new Error(responseJson.message);
+  }>(router.projects.detail.value(id));
+  if (response.error) {
+    throw new Error(response.error);
   }
-  return responseJson.data.project;
+  return response.data.project;
 };
 
 export const useGetProject = (id: string) => {

@@ -4,6 +4,7 @@ import { Text, VStack, HStack, Pressable } from "native-base";
 import NavigationService from "../service";
 import { SvgProps } from "react-native-svg";
 import CustomIcon from "@/components/UI/Icon";
+import routes from "../routes";
 
 const SCREENS_WITHOUT_BOTTOM_TAB: string[] = [];
 
@@ -41,7 +42,7 @@ const CustomBottomTab = ({ state, descriptors, navigation }) => {
         let iconType = "custom";
         let label;
         switch (route.name) {
-          case "Home":
+          case routes.main.home:
             iconType = "feather";
             iconName = "home";
             label = "Home";
@@ -56,9 +57,10 @@ const CustomBottomTab = ({ state, descriptors, navigation }) => {
             iconType = "fontawesome";
             label = "Wallet";
             break;
-          case "Profile":
+          case routes.main.folio:
+            iconType = "feather";
             iconName = "user";
-            label = "Profile";
+            label = "Folio";
             break;
           default:
             break;

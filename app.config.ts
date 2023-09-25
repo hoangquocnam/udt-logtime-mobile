@@ -8,7 +8,7 @@ const config: ExpoConfig = {
   icon: "./src/assets/icon.png",
   splash: {
     image: "./src/assets/splash.png",
-    resizeMode: "contain",
+    resizeMode: "cover",
     backgroundColor: "#ffffff",
   },
   updates: {
@@ -21,7 +21,7 @@ const config: ExpoConfig = {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./src/assets/adaptive-icon.png",
+      foregroundImage: "./src/assets/icon.png",
       backgroundColor: "#FFFFFF",
     },
     package: "com.udt.mobile.timesheet",

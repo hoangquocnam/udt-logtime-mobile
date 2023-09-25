@@ -3,15 +3,16 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import routes from "../routes";
 import HomeScreen from "@/screens/HomeStack/HomeScreen";
-import { DARK_BLUE } from "@/theme/colors";
+import { BACKGROUND, DARK_BLUE } from "@/theme/colors";
 import t from "@/theme";
 import LocalStorage from "@/store/localStorage";
 import { getImageUrl } from "@/utils";
 import { useStores } from "@/hooks/useStores";
-import { Avatar, HStack, VStack, Text } from "native-base";
-import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
+import { Avatar, HStack, Text } from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
 import { MainParamList, MainParamListNavigationProps } from "../ParamList";
 import CustomBottomTab from "../UI/BottomTab";
+import FolioNavigation from "./folio.stack";
 
 const BottomTabNavigator = createBottomTabNavigator<MainParamList>();
 
@@ -44,7 +45,7 @@ const MainNavigation = () => {
           borderWidth={1}
         />
         <Text ml={2} color={DARK_BLUE} fontSize={13}>
-          {"Hi, " + authStore?.user?.fullName ?? "" + "!"}
+          {"Hi, " + (authStore?.user?.fullName ?? "") + " !"}
         </Text>
       </HStack>
     );
@@ -52,23 +53,31 @@ const MainNavigation = () => {
 
   return (
     <BottomTabNavigator.Navigator
-      screenOptions={({ route }) => {
-        return {
-          headerRight: HeaderRight,
-          headerLeft: HeaderLeft,
-          headerStyle: {
-            height: 100,
-            shadowColor: "#000",
-          },
-          headerTitle: "",
-          headerShadowVisible: true,
-        };
+      screenOptions={{
+        headerShown: false,
       }}
       tabBar={(props) => <CustomBottomTab {...props} />}
     >
       <BottomTabNavigator.Screen
         name={routes.main.home}
         component={HomeScreen}
+        options={{
+          headerShown: true,
+          headerRight: HeaderRight,
+          headerLeft: HeaderLeft,
+          headerStyle: {
+            height: 100,
+            shadowColor: "transparent",
+            elevation: 0,
+            backgroundColor: BACKGROUND,
+          },
+          headerTitle: "",
+          headerShadowVisible: true,
+        }}
+      />
+      <BottomTabNavigator.Screen
+        name={routes.main.folio}
+        component={FolioNavigation}
       />
     </BottomTabNavigator.Navigator>
   );

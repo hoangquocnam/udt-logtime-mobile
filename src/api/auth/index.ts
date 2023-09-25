@@ -1,22 +1,18 @@
 import { useMutation, useQuery } from "react-query";
 import { router } from "../router";
 import { IUserLogin, IUserState } from "../../interfaces/user";
-import { authHeader } from "..";
+import { get, post } from "..";
 import LocalStorage from "../../store/localStorage";
 
 const postLogin = async (email: string, password: string) => {
-  const response = await fetch(router.login.value, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  });
-  const responseJson = await response.json();
-  if (response.status !== 200) {
-    throw new Error(responseJson.message);
-  }
-  return responseJson.data;
+  const response = await post<
+    { data: { user: IUserState } },
+    {
+      email: string;
+      password: string;
+    }
+  >(router.login.value, { email, password });
+  return response?.data;
 };
 
 export const usePostLogin = ({ onError }) => {
@@ -39,7 +35,7 @@ export const usePostLogin = ({ onError }) => {
   );
 };
 
-export const useMe = () => {
+export const useMe = (options?: { enabled?: boolean }) => {
   return useQuery<
     {
       user: IUserState;
@@ -54,21 +50,17 @@ export const useMe = () => {
         throw new Error("Token not found");
       }
       const email = await storage.getItem("email");
-      const response = await fetch(
-        `https://app.udt.group/v1/auth/refresh-token/${email}`,
-        {
-          method: "GET",
-          headers: await authHeader(),
-        }
+      const response = await get<{ data: { user: IUserState } }>(
+        `https://app.udt.group/v1/auth/refresh-token/${email}`
       );
-      const responseJson = await response.json();
       if (response.status !== 200) {
-        throw new Error(responseJson.message);
+        throw new Error(response.message);
       }
-      return responseJson.data;
+      return response.data;
     },
     onError: (error) => {
       console.error("useMe", error);
     },
+    ...options,
   });
 };

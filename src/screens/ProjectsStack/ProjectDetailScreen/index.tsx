@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
-import { HStack, Image, ScrollView, Text, VStack } from "native-base";
+import { Box, HStack, Image, ScrollView, Text, VStack } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProjectParamList } from "@/navigation/ParamList";
 import { useGetReportProject } from "@/api/report";
 import { format } from "date-fns";
 import { BACKGROUND, DARK_BLUE } from "@/theme/colors";
-import { ActivityIndicator, RefreshControl, SafeAreaView } from "react-native";
+import {
+  ActivityIndicator,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
 import BackIcon from "@/components/UI/Icon/BackIcon";
 import { getImageUrl } from "@/utils";
 import PriceBox from "@/components/ProjecScreenElements/PriceBox";
@@ -13,12 +20,14 @@ import TimeBox from "@/components/ProjecScreenElements/TimeBox";
 import ProjectReportDetailForm from "@/components/ProjecScreenElements/ProjectDetailForm";
 import { useGetProject } from "@/api/projects";
 import ReportList from "@/components/ProjecScreenElements/ReportList";
+import { StackNavigationOptions } from "@react-navigation/stack";
+import { deviceHeight } from "@/constants";
 
 type Props = NativeStackScreenProps<ProjectParamList, "ProjectDetail">;
 
 const ProjectDetailScreen = (props: Props) => {
   const [date] = React.useState<Date | undefined>(undefined);
-  const { route } = props;
+  const { route, navigation } = props;
   const { id, logo } = route.params;
 
   const {
@@ -125,9 +134,21 @@ const ProjectDetailScreen = (props: Props) => {
 
 export default ProjectDetailScreen;
 
-export const screenOptions = {
+export const screenOptions: StackNavigationOptions = {
   headerShown: true,
-  title: "Monthly Report",
+  title: "",
   headerBackImage: () => <BackIcon />,
   headerBackTitle: "",
+  headerStyle: {
+    backgroundColor: BACKGROUND,
+    elevation: 0,
+    borderBottomWidth: 0,
+    shadowColor: "transparent",
+  },
+  headerTitleAlign: "center",
+  headerTitleStyle: {
+    color: DARK_BLUE,
+    fontFamily: "Satoshi",
+    fontWeight: "600",
+  },
 };

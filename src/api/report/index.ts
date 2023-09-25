@@ -1,14 +1,12 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation } from "react-query";
 import { router } from "../router";
-import { authHeader } from "..";
+import { post } from "..";
 import { ReportDetail, TimeSheet } from "../../interfaces/report";
 
 type DataReportTimesheet = {
   reportDetail: ReportDetail;
   timesheets: TimeSheet;
 };
-
-type Awaited<T> = T extends PromiseLike<infer U> ? U : T;
 
 type BodyReportTimesheet = {
   project: string;
@@ -19,20 +17,17 @@ type BodyReportTimesheet = {
 const getReportProject = async (
   body: BodyReportTimesheet
 ): Promise<DataReportTimesheet> => {
-  const auth = await authHeader();
-  const response = await fetch(router.reports.report.detail.value, {
-    method: "POST",
-    headers: auth,
-    body: JSON.stringify(body),
-  });
-  const responseJson: Awaited<{
-    message: string;
-    data: DataReportTimesheet;
-  }> = await response.json();
-  if (response.status !== 200) {
-    throw new Error(responseJson.message);
+  const response = await post<
+    {
+      message: string;
+      data: DataReportTimesheet;
+    },
+    BodyReportTimesheet
+  >(router.reports.report.detail.value, body);
+  if (response.error || response?.message) {
+    throw new Error(response.error || response?.message);
   }
-  return responseJson.data;
+  return response.data;
 };
 
 export const useGetReportProject = (key?: string) => {

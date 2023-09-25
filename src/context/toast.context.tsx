@@ -30,7 +30,7 @@ export const ToastContext = createContext<IToastContext>({
 
 export const ToastProvider = ({ children }) => {
   const [toast, setToast] = useState<IToast>(initialToast);
-  const timeout = useRef<number>();
+  const timeout = useRef<NodeJS.Timeout>();
 
   const show = useCallback((newToast: IToast) => {
     setToast({ ...initialToast, visible: true, ...newToast });
@@ -42,7 +42,7 @@ export const ToastProvider = ({ children }) => {
 
   useEffect(() => {
     if (toast.visible) {
-      timeout.current = window.setTimeout(hide, 1500);
+      timeout.current = setTimeout(hide, 1500);
       return () => {
         if (timeout.current) {
           clearTimeout(timeout.current);

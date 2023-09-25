@@ -9,6 +9,8 @@ export const COMPANY_URL =
   Constants.manifest?.extra?.COMPANY_URL ||
   "https://app.udt.group/";
 
+export const API_URL_V2 = COMPANY_URL + "v2/v1";
+
 export const router = {
   value: `${API_URL}/auth`,
   login: {
@@ -30,6 +32,12 @@ export const router = {
     },
     detail: {
       value: (id: string) => `${API_URL}/projects/detail-of-user/${id}`,
+    },
+  },
+  folio: {
+    dashboard: {
+      value: (period: string, date?: string) =>
+        `${API_URL_V2}/users/dashboard?period=${period}&date=${date}`,
     },
   },
 };

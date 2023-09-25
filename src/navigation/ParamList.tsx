@@ -18,6 +18,7 @@ export type AuthParamListNavigationProps =
 
 export type MainParamList = {
   Home: undefined;
+  FolioStack: undefined;
 };
 
 export type MainParamListNavigationProps =
@@ -33,3 +34,10 @@ export type ProjectParamList = {
 
 export type ProjectParamListNavigationProps =
   NativeStackNavigationProp<ProjectParamList>;
+
+export type FolioParamList = {
+  Folio: undefined;
+};
+
+export type FolioParamListNavigationProps =
+  NativeStackNavigationProp<FolioParamList>;

@@ -8,7 +8,7 @@ import {
 import t from "@/theme";
 import React, { useEffect, useRef, useContext } from "react";
 import { ToastContext } from "@/context/toast.context";
-import { PRIMARY } from "@/theme/colors";
+import { DARK_BLUE } from "@/theme/colors";
 
 const PopOutTime = 2 * 100;
 const AutoDuration = 300;
@@ -69,7 +69,7 @@ export default function BottomToast() {
           t.pX8,
           {
             maxWidth: "100%",
-            backgroundColor: toast?.color || PRIMARY,
+            backgroundColor: toast?.color || DARK_BLUE,
           },
         ]}
       >
