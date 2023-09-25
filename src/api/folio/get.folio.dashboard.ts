@@ -1,4 +1,4 @@
-import { EDateBarType } from "@/components/UI/DateBar";
+import { EPeriods } from "@/components/HomeStackElements/Home/PeriodSelector";
 import { ProjectDetail } from "@/interfaces/project";
 import moment from "moment";
 import { useQuery } from "react-query";
@@ -137,9 +137,15 @@ export type DeveloperOnProjectData = {
   isDeleted?: boolean;
 };
 
-export const getDashBoard = async () => {
+export const getDashBoard = async (period: EPeriods, date?: Date) => {
   const response = await get<TDashBoardResult>(
-    router.folio.dashboard.value("month")
+    router.folio.dashboard.value(
+      period,
+      moment(date ?? undefined).format("DD-MM-YYYY")
+    ),
+    {
+      v2: true,
+    }
   );
   if (response?.error) {
     throw new Error(response.error);
@@ -147,14 +153,19 @@ export const getDashBoard = async () => {
   return response;
 };
 
-export const useDashBoard = (period: EDateBarType) => {
+export const useDashBoard = (period: EPeriods, date?: Date) => {
   return useQuery<
     TDashBoardResult & ErrorResponse,
     Error,
     TDashBoardResult & ErrorResponse,
     any
   >(
-    [router.folio.dashboard.value(period, moment().format("YYYY-MM-DD"))],
-    getDashBoard
+    [
+      router.folio.dashboard.value(
+        period,
+        moment(date ?? undefined).format("DD-MM-YYYY")
+      ),
+    ],
+    () => getDashBoard(period, date)
   );
 };

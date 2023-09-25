@@ -9,12 +9,15 @@ export const COMPANY_URL =
   Constants.manifest?.extra?.COMPANY_URL ||
   "https://app.udt.group/";
 
-export const API_URL_V2 = COMPANY_URL + "v2/v1";
+export const API_URL_V2 = COMPANY_URL + "v2/v1/";
 
 export const router = {
   value: `${API_URL}/auth`,
   login: {
     value: `${API_URL}/auth/login`,
+    v2: {
+      value: `${API_URL_V2}/auth/login`,
+    },
   },
   reports: {
     value: `${API_URL}/report-timesheet`,

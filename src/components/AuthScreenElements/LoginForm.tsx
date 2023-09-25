@@ -9,7 +9,7 @@ import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
 import useToast from "@/hooks/useToast";
 import { IUserLogin } from "@/interfaces/user";
-import { useMe, usePostLogin } from "@/api/auth";
+import { useMe, usePostLogin, usePostLoginV2 } from "@/api/auth";
 import LocalStorage from "@/store/localStorage";
 import { Button, Text, VStack } from "native-base";
 import { useStores } from "@/hooks/useStores";
@@ -23,19 +23,31 @@ const schema = yup
 
 const LoginForm = () => {
   const {
-    data: dataLogin,
-    mutateAsync,
-    isLoading,
+    data: dataLoginV1,
+    mutateAsync: loginV1,
+    isLoading: isLoadingLoginV1,
   } = usePostLogin({
     onError: (error: Error) => {
       show({ message: error.message, color: ERROR });
     },
   });
+
+  const {
+    data: dataLoginV2,
+    mutateAsync: loginV2,
+    isLoading: isLoadingLoginV2,
+  } = usePostLoginV2({
+    onError: (error: Error) => {
+      show({ message: error.message, color: ERROR });
+    },
+  });
+
   const storage = LocalStorage.getInstance();
   const { authStore } = useStores();
   const [trigger, setTrigger] = React.useState(false);
+  const [triggerV2, setTriggerV2] = React.useState(false);
   const { data: me, isFetching: isLoadingMe } = useMe({
-    enabled: trigger,
+    enabled: trigger && triggerV2,
   });
 
   const { show } = useToast();
@@ -54,23 +66,33 @@ const LoginForm = () => {
   } = method;
 
   const handleLogin = async (payload: IUserLogin) => {
-    await mutateAsync(payload);
+    await loginV1(payload);
+    await loginV2(payload);
   };
 
   useEffect(() => {
-    const onLoginSuccess = async () => {
-      if (dataLogin?.user) {
-        show({ message: "Login success!" });
-        await storage.setItem("email", dataLogin?.user?.email);
-        await storage.setItem("aToken", dataLogin?.user?.aToken);
-        await storage.setItem("rToken", dataLogin?.user?.rToken);
+    const onLoginSuccessV1 = async () => {
+      if (dataLoginV1?.user) {
+        await storage.setItem("email", dataLoginV1?.user?.email);
+        await storage.setItem("aToken", dataLoginV1?.user?.aToken);
+        await storage.setItem("rToken", dataLoginV1?.user?.rToken);
         setTrigger(true);
-        authStore.setUser(dataLogin?.user);
+        show({ message: "Login success!" });
+        authStore.setUser(dataLoginV1?.user);
       }
     };
 
-    onLoginSuccess();
-  }, [dataLogin]);
+    const onLoginSuccessV2 = async () => {
+      if (dataLoginV2?.user) {
+        await storage.setItem("aTokenV2", dataLoginV2?.user?.aToken);
+        await storage.setItem("rTokenV2", dataLoginV2?.user?.rToken);
+        setTriggerV2(true);
+      }
+    };
+
+    dataLoginV1 && onLoginSuccessV1();
+    dataLoginV2 && onLoginSuccessV2();
+  }, [dataLoginV1, dataLoginV2]);
 
   useEffect(() => {
     if (me) {
@@ -78,7 +100,7 @@ const LoginForm = () => {
     }
   }, [me]);
 
-  if (isLoading || isLoadingMe) {
+  if (isLoadingLoginV1 || isLoadingMe || isLoadingLoginV2) {
     return (
       <View style={[t.flex1, t.itemsCenter, t.justifyCenter]}>
         <ActivityIndicator size="large" />

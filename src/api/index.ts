@@ -1,7 +1,14 @@
 import useAuth from "@/hooks/useAuth";
 
-export const authHeader = async () => {
-  const { getRefreshToken } = useAuth();
+export const authHeader = async (v2 = false) => {
+  const { getRefreshToken, getRefreshTokenV2 } = useAuth();
+  if (v2) {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${await getRefreshTokenV2()}`,
+      "x-refresh-token": (await getRefreshTokenV2()) || "",
+    };
+  }
   return {
     "Content-Type": "application/json",
     Authorization: `Bearer ${await getRefreshToken()}`,
@@ -17,12 +24,13 @@ export type ErrorResponse = {
 
 export async function post<TResponse, TBody extends object>(
   url: string,
-  body: TBody
+  body: TBody,
+  options?: { v2?: boolean }
 ): Promise<TResponse & ErrorResponse> {
-  const options = await authHeader();
+  const optionsAuth = await authHeader(options?.v2);
   const response = await fetch(url, {
     headers: {
-      ...options,
+      ...optionsAuth,
     },
     method: "POST",
     body: JSON.stringify(body),
@@ -33,12 +41,13 @@ export async function post<TResponse, TBody extends object>(
 }
 
 export async function get<TResponse>(
-  url: string
+  url: string,
+  options?: { v2?: boolean }
 ): Promise<TResponse & ErrorResponse> {
-  const options = await authHeader();
+  const optionsAuth = await authHeader(options?.v2);
   const response = await fetch(url, {
     headers: {
-      ...options,
+      ...optionsAuth,
     },
     method: "GET",
   });
@@ -49,12 +58,13 @@ export async function get<TResponse>(
 
 export async function del<TResponse, TBody extends object>(
   url: string,
-  body?: TBody
+  body?: TBody,
+  options?: { v2?: boolean }
 ): Promise<TResponse & ErrorResponse> {
-  const options = await authHeader();
+  const optionsAuth = await authHeader(options?.v2);
   const response = await fetch(url, {
     headers: {
-      ...options,
+      ...optionsAuth,
     },
     method: "DELETE",
     body: JSON.stringify(body),
@@ -66,12 +76,13 @@ export async function del<TResponse, TBody extends object>(
 
 export async function patch<TResponse, TBody extends object>(
   url: string,
-  body: TBody
+  body: TBody,
+  options?: { v2?: boolean }
 ): Promise<TResponse & ErrorResponse> {
-  const options = await authHeader();
+  const optionsAuth = await authHeader(options?.v2);
   const response = await fetch(url, {
     headers: {
-      ...options,
+      ...optionsAuth,
     },
     method: "PATCH",
     body: JSON.stringify(body),

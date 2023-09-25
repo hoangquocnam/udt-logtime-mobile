@@ -15,6 +15,17 @@ const postLogin = async (email: string, password: string) => {
   return response?.data;
 };
 
+const postLoginV2 = async (email: string, password: string) => {
+  const response = await post<
+    { data: { user: IUserState } },
+    {
+      email: string;
+      password: string;
+    }
+  >(router.login.v2.value, { email, password });
+  return response?.data;
+};
+
 export const usePostLogin = ({ onError }) => {
   return useMutation<
     {
@@ -28,6 +39,26 @@ export const usePostLogin = ({ onError }) => {
     },
     {
       mutationKey: ["login"],
+      onError: (error) => {
+        onError(error);
+      },
+    }
+  );
+};
+
+export const usePostLoginV2 = ({ onError }) => {
+  return useMutation<
+    {
+      user: IUserState;
+    },
+    Error,
+    IUserLogin
+  >(
+    (payload: IUserLogin) => {
+      return postLoginV2(payload.email, payload.password);
+    },
+    {
+      mutationKey: ["loginV2"],
       onError: (error) => {
         onError(error);
       },
