@@ -83,21 +83,20 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
             fontFamily: "Satoshi",
           }}
           rowStyle={{
-            borderRadius: 12,
             backgroundColor: "white",
           }}
           rowTextStyle={{
             textTransform: "capitalize",
             fontWeight: "bold",
             fontSize: 14,
+            fontFamily: "Satoshi",
           }}
           selectedRowStyle={{
             backgroundColor: LIGHT_BLUE,
           }}
           dropdownStyle={{
-            borderBottomRightRadius: 12,
-            borderBottomLeftRadius: 12,
-            backgroundColor: "transparent",
+            borderBottomRightRadius: 8,
+            borderBottomLeftRadius: 8,
           }}
         />
         <TouchableNativeFeedback

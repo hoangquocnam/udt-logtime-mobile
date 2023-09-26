@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { useGetProjects } from "@/api/projects";
 import { ProjectDetail } from "@/interfaces/project";
-import ProjectListItem from "@/components/HomeStackElements/Home/ProjectListItem";
 import TotalSalaryReport from "@/components/HomeStackElements/Home/TotalSalaryReport";
 import t from "@/theme";
 import PeriodSelector, {
@@ -20,6 +19,7 @@ import { BACKGROUND, LIGHT_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
 import { useNavigation } from "@react-navigation/native";
 import { RootParamListNavigationProps } from "@/navigation/ParamList";
 import routes from "@/navigation/routes";
+import ProjectListItem from "@/components/HomeStackElements/Home/ProjectListItem";
 
 function HomeScreen() {
   const {
@@ -119,7 +119,6 @@ function HomeScreen() {
               <Text style={[{ fontSize: 20, fontWeight: "bold" }, t.mB2]}>
                 Projects
               </Text>
-
               <Text onPress={goToProjectList}>See all</Text>
             </HStack>
             <FlatList<ProjectDetail>

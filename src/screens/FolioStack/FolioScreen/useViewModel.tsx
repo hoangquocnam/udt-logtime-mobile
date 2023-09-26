@@ -5,15 +5,23 @@ import { DARK_BLUE, YELLOW } from "@/theme/colors";
 import { EPeriods } from "@/components/HomeStackElements/Home/PeriodSelector";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { EChartType } from "@/enums";
+import { useGetProjects } from "@/api/projects";
 
 const useViewModel = () => {
   const [period, setPeriod] = React.useState(EPeriods.MONTH);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { data: dataDashBoard } = useDashBoard(period, selectedDate);
+  const { data: dataProjects } = useGetProjects();
 
   const [performanceType, setPerformanceType] = useState(EChartType.TIME);
 
-  const chartPerformanceData: ChartData | null = useMemo(() => {
+  const chartPerformanceData: {
+    data: ChartData;
+    legend: {
+      name: string;
+      color: string;
+    }[];
+  } | null = useMemo(() => {
     if (!dataDashBoard || !(performanceType === EChartType.TIME)) return null;
     const performances = dataDashBoard?.performanceLineData || [];
     const totalPerformance = getValidArray(performances).find(
@@ -35,23 +43,41 @@ const useViewModel = () => {
       };
     });
 
-    const legends = [
-      totalPerformance?.name || "",
-      ...othersPerformance.map((pf) => pf?.name || ""),
-    ];
-
     return {
-      labels: totalLabels,
-      datasets: [
+      data: {
+        labels: totalLabels,
+        datasets: [
+          {
+            data: totalData,
+            color: () => YELLOW,
+          },
+          ...othersData,
+        ],
+      },
+      legend: [
         {
-          data: totalData,
-          color: () => YELLOW,
+          name: "Total",
+          color: YELLOW,
         },
-        ...othersData,
+        ...othersPerformance.map((pf) => {
+          return {
+            name: pf?.name || "",
+            color: pf?.color || DARK_BLUE,
+          };
+        }),
       ],
-      legend: legends,
     };
   }, [dataDashBoard, performanceType]);
+
+  const projects = useMemo(() => {
+    const currentProjects =
+      dataDashBoard?.timesheetData?.map((p) => p?._id?.project) || [];
+    return (
+      dataProjects?.projects?.filter((project) => {
+        return currentProjects?.includes(project?._id);
+      }) || []
+    );
+  }, [dataProjects, dataDashBoard]);
 
   const onChangePeriod = (period: string) => {
     setPeriod(period as EPeriods);
@@ -68,6 +94,8 @@ const useViewModel = () => {
     selectedDate,
     onChangePeriod,
     onChangeDate,
+    period,
+    projects,
   };
 };
 

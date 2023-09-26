@@ -15,7 +15,11 @@ const DateBar = <T extends string>(props: DateBarProps<T>) => {
   return (
     <HStack w="100%" space={2} justifyContent="space-around">
       {data.map((item) => (
-        <TouchableOpacity onPress={() => setType?.(item)} key={item}>
+        <TouchableOpacity
+          onPress={() => setType?.(item)}
+          key={item}
+          style={{ flex: 1 }}
+        >
           <Box
             px={3}
             py={1}
