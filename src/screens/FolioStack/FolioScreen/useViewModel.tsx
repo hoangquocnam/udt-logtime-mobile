@@ -10,8 +10,16 @@ import { useGetProjects } from "@/api/projects";
 const useViewModel = () => {
   const [period, setPeriod] = React.useState(EPeriods.MONTH);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const { data: dataDashBoard } = useDashBoard(period, selectedDate);
-  const { data: dataProjects } = useGetProjects();
+  const {
+    data: dataDashBoard,
+    refetch: refetchDashboard,
+    isFetching: isFetchingDashboard,
+  } = useDashBoard(period, selectedDate);
+  const {
+    data: dataProjects,
+    refetch: refetchProjects,
+    isFetching: isFetchingProjects,
+  } = useGetProjects();
 
   const [performanceType, setPerformanceType] = useState(EChartType.TIME);
 
@@ -79,12 +87,26 @@ const useViewModel = () => {
     );
   }, [dataProjects, dataDashBoard]);
 
+  const totalData = useMemo(() => {
+    const totalSalary = dataDashBoard?.totalSalary || 0;
+    const totalWorkingTime = dataDashBoard?.totalWorkingTime || 0;
+    return {
+      totalSalary,
+      totalWorkingTime,
+    };
+  }, [dataDashBoard]);
+
   const onChangePeriod = (period: string) => {
     setPeriod(period as EPeriods);
   };
 
   const onChangeDate = (date: Date) => {
     setSelectedDate(date);
+  };
+
+  const onRefresh = () => {
+    refetchDashboard();
+    refetchProjects();
   };
 
   return {
@@ -96,6 +118,9 @@ const useViewModel = () => {
     onChangeDate,
     period,
     projects,
+    totalData,
+    isFetching: isFetchingDashboard || isFetchingProjects,
+    onRefresh,
   };
 };
 

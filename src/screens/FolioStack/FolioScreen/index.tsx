@@ -14,7 +14,7 @@ import {
   View,
 } from "native-base";
 import React from "react";
-import { ListRenderItem } from "react-native";
+import { ListRenderItem, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useViewModel from "./useViewModel";
 import t from "@/theme";
@@ -32,6 +32,9 @@ const FolioScreen = () => {
     onChangeDate,
     period,
     projects,
+    totalData,
+    isFetching,
+    onRefresh,
   } = useViewModel();
 
   const renderItem: ListRenderItem<ProjectDetail> = ({ item }) => (
@@ -39,6 +42,7 @@ const FolioScreen = () => {
       item={item}
       period={period}
       date={selectedDate}
+      total={totalData}
     />
   );
 
@@ -53,20 +57,26 @@ const FolioScreen = () => {
       }}
       edges={["top"]}
     >
-      <ScrollView flex={1} h={"100%"} bg={BACKGROUND} pt={1}>
+      <ScrollView
+        flex={1}
+        h={"100%"}
+        bg={BACKGROUND}
+        pt={1}
+        refreshControl={
+          <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />
+        }
+      >
         <VStack
           px={5}
-          space={4}
+          space={6}
           justifyContent="center"
-          divider={<View style={[t.h0_5, t.bgGray400, t.mY8]} />}
+          divider={<Box h={0.5} bg={LIGHT_BLUE} />}
         >
-          <Box>
+          <VStack space={5}>
             <Text fontSize={24} fontWeight={"bold"} color={DARK_BLUE}>
               Folio
             </Text>
-          </Box>
 
-          <VStack space={6}>
             <Box
               justifyContent="space-around"
               backgroundColor={BACKGROUND}
