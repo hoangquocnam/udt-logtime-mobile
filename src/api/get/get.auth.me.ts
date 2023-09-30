@@ -66,7 +66,7 @@ export const usePostLoginV2 = ({ onError }) => {
   );
 };
 
-export const useMe = (options?: { enabled?: boolean }) => {
+export const useMe = (options?: { enabled?: boolean, onSuccess?: () => void }) => {
   return useQuery<
     {
       user: IUserRefreshToken;

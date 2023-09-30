@@ -61,6 +61,7 @@ const FolioScreen = () => {
       <ScrollView flex={1} h={"100%"} bg={BACKGROUND}>
         <VStack
           space={6}
+          p={5}
           justifyContent="center"
           divider={<Box h={0.5} bg={LIGHT_BLUE} />}
         >

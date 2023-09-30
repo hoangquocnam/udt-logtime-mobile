@@ -3,20 +3,28 @@ import { IUserRefreshToken } from "@/interfaces/user";
 import { hp, wp } from "@/theme";
 import { getImageUrl } from "@/utils";
 import { observer } from "mobx-react";
-import { Box, Image, Text, VStack, HStack } from "native-base";
+import { Box, Image, Text, VStack, HStack, Menu, Pressable } from "native-base";
 import React from "react";
 import { toCapitalizeFirstLetter } from "@/utils";
+import { Entypo } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
+import { fonts } from "@/theme/fonts";
 
 type ProfilePanelProps = {};
-const TOP_HEIGHT = hp(370);
-const HEIGHT = hp(370) + hp(102);
+
+const TOP_HEIGHT = hp(390);
+const HEIGHT = TOP_HEIGHT + hp(102);
 
 const ProfilePanel = (props: ProfilePanelProps) => {
   const { authStore } = useStores();
-
   const { user } = authStore;
 
-  console.log(user)
+  const MenuItem = [
+    {
+      title: "Logout",
+      onPress: () => authStore.logout(),
+    },
+  ];
 
   return (
     <VStack position="relative" h={HEIGHT}>
@@ -33,9 +41,46 @@ const ProfilePanel = (props: ProfilePanelProps) => {
         w={"100%"}
         zIndex={1}
       >
-        <Text fontSize={wp(20)} color={"white"}>
-          Profile
-        </Text>
+        <HStack
+          position="relative"
+          w="100%"
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Text fontSize={wp(20)} color={"white"}>
+            Profile
+          </Text>
+          <Menu
+            w="190"
+            trigger={(triggerProps) => {
+              return (
+                <TouchableOpacity
+                  style={{ position: "absolute", right: 20 }}
+                  {...triggerProps}
+                >
+                  <Entypo
+                    name="dots-three-horizontal"
+                    size={24}
+                    color="white"
+                  />
+                </TouchableOpacity>
+              );
+            }}
+          >
+            {MenuItem.map((item, index) => (
+              <Menu.Item
+                key={index}
+                onPress={item.onPress}
+                _text={{
+                  fontSize: 14,
+                  fontWeight: "bold",
+                }}
+              >
+                {item.title}
+              </Menu.Item>
+            ))}
+          </Menu>
+        </HStack>
         <Image
           source={{
             uri: getImageUrl(user?.avatar || ""),
@@ -44,14 +89,32 @@ const ProfilePanel = (props: ProfilePanelProps) => {
           alt={`Avatar ${user?.fullName}`}
           borderRadius={wp(60)}
         />
-        <Box w={"100%"} justifyContent="center" alignItems="center">
+        <VStack
+          w={"100%"}
+          justifyContent="center"
+          alignItems="center"
+          space={2}
+        >
           <Text color={"white"} fontSize={20}>
             {user?.fullName}
           </Text>
-          <Text color={"white"} fontSize={14} fontWeight={"500"}>
+          <Text
+            color={"white"}
+            fontSize={14}
+            fontWeight={"500"}
+            fontFamily={fonts.light}
+          >
             {user?.email}
           </Text>
-        </Box>
+          <Text
+            color={"white"}
+            fontSize={14}
+            fontWeight={"500"}
+            fontFamily={fonts.light}
+          >
+            {user?.phone}
+          </Text>
+        </VStack>
       </VStack>
 
       <HStack
@@ -59,24 +122,23 @@ const ProfilePanel = (props: ProfilePanelProps) => {
         alignItems="center"
         bg="white"
         position="absolute"
+        justifyContent="center"
         borderBottomRadius={wp(30)}
         bottom={hp(20)}
         minH={HEIGHT}
         w={"100%"}
       >
         <HStack
-          py={"30"}
           alignSelf={"flex-end"}
           justifyContent="space-around"
           flexShrink={1}
+          bottom={hp(20)}
         >
           <VStack alignItems="center" flex={1} flexShrink={1}>
-            <Text fontSize={12} fontWeight={"500"} flex={1}
-              fontFamily={"Satoshi-Light"}
-            >
+            <Text fontSize={12} fontWeight={"500"} flex={1}>
               Role
             </Text>
-            <Text fontSize={14} fontWeight={"500"} flex={1}>
+            <Text fontSize={14} flex={1} fontFamily={fonts.bold}>
               {user?.title?.value}
             </Text>
           </VStack>
@@ -84,16 +146,16 @@ const ProfilePanel = (props: ProfilePanelProps) => {
             <Text fontSize={12} fontWeight={"500"} flex={1}>
               Partner category
             </Text>
-            <Text fontSize={14} fontWeight={"500"} flex={1}>
+            <Text fontSize={14} fontFamily={fonts.bold} flex={1}>
               {toCapitalizeFirstLetter(user?.partner?.category || "")}
             </Text>
           </VStack>
           <VStack alignItems="center" flex={1} flexShrink={1}>
             <Text fontSize={12} fontWeight={"500"} flex={1}>
-              Default rate
+              Level
             </Text>
-            <Text fontSize={14} flex={1} fontWeight={"light"}>
-              {user?.defaultRating}
+            <Text fontSize={14} flex={1} fontFamily={fonts.bold}>
+              {toCapitalizeFirstLetter(user?.level?.value || "")}
             </Text>
           </VStack>
         </HStack>

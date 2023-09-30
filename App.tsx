@@ -10,14 +10,9 @@ import { DARK_BLUE } from "./src/theme/colors";
 import { rootStore } from "./src/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { theme } from "@/theme";
+import { customFonts } from "@/theme/fonts";
 
 const queryClient = new QueryClient();
-
-const customFonts = {
-  Satoshi: require("./src/assets/fonts/Satoshi-Black.otf"),
-  SatoshiBold: require("./src/assets/fonts/Satoshi-Bold.otf"),
-  SatoshiLight: require("./src/assets/fonts/Satoshi-Light.otf"),
-};
 
 export default function App() {
   const [loaded] = useFonts(customFonts);

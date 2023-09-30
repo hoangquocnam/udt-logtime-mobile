@@ -19,8 +19,10 @@ const AppNavigation = () => {
     },
     headerShown: false,
   };
-  const { data: dataMe } = useProfile();
   const { authStore } = useStores();
+  const { data: dataMe } = useProfile({
+    enabled: !!authStore?.user?.id,
+  });
 
   useEffect(() => {
     if (dataMe) {
@@ -33,7 +35,7 @@ const AppNavigation = () => {
   }, [dataMe]);
 
   const screensToUse = useMemo(() => {
-    if (!authStore?.user) {
+    if (!authStore?.user?.id) {
       return (
         <AppStackNavigator.Screen
           name={routes.root.auth}

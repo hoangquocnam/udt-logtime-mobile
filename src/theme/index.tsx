@@ -5,6 +5,7 @@ import {
 } from "react-native-responsive-screen";
 import { createTheme } from "react-native-whirlwind";
 import { DARK_BLUE, LIGHT_BLUE, SEMI_DARK_BLUE } from "./colors";
+import { fonts } from "./fonts";
 
 // whirlwind theme provider
 const t = createTheme();
@@ -24,10 +25,11 @@ export const hPercent = (v: number) => `${(v * 100) / VIEWPORT_HEIGHT}%`;
 
 export const theme = extendTheme({
   fonts: {
-    heading: "Satoshi",
-    body: "Satoshi",
-    mono: "Satoshi",
-    customFont: "Satoshi",
+    ...fonts,
+    heading: fonts.regular,
+    body: fonts.regular,
+    mono: fonts.regular,
+    customFont: fonts.regular,
   },
   fontWeights: {
     normal: 400,
@@ -45,6 +47,13 @@ export const theme = extendTheme({
       },
       defaultProps: {
         colorScheme: "primary",
+      },
+    },
+    Text: {
+      variants: {
+        bold: {
+          fontWeight: "bold",
+        },
       },
     },
   },

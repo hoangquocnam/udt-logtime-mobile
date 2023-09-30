@@ -13,6 +13,7 @@ import { useMe, usePostLogin, usePostLoginV2 } from "@/api/get/get.auth.me";
 import LocalStorage from "@/store/localStorage";
 import { Button, Text, VStack } from "native-base";
 import { useStores } from "@/hooks/useStores";
+import { useProfile } from "@/api/get/get.profile";
 
 const schema = yup
   .object({
@@ -46,6 +47,9 @@ const LoginForm = () => {
   const { authStore } = useStores();
   const [trigger, setTrigger] = React.useState(false);
   const [triggerV2, setTriggerV2] = React.useState(false);
+  const { data: dataProfile } = useProfile({
+    enabled: trigger && triggerV2,
+  });
   const { data: me, isFetching: isLoadingMe } = useMe({
     enabled: trigger && triggerV2,
   });
@@ -95,10 +99,11 @@ const LoginForm = () => {
   }, [dataLoginV1, dataLoginV2]);
 
   useEffect(() => {
-    if (me) {
-      authStore.setUser(me?.user);
+    if (me && dataProfile) {
+      // @ts-ignore
+      authStore.setUser({ ...me?.user, ...dataProfile });
     }
-  }, [me]);
+  }, [me, dataProfile]);
 
   if (isLoadingLoginV1 || isLoadingMe || isLoadingLoginV2) {
     return (

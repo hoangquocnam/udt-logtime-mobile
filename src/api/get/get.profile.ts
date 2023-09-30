@@ -19,9 +19,12 @@ export const getProfile = async () => {
   return response?.data?.user;
 };
 
-export const useProfile = () => {
+export const useProfile = ({ enabled = true }) => {
   return useQuery<IUserProfile, Error, IUserProfile, any>(
     [router.profile.profile.value],
-    () => getProfile()
+    () => getProfile(),
+    {
+      enabled,
+    }
   );
 };
