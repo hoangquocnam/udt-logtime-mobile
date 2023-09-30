@@ -2,12 +2,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import routes from "./routes";
 import { Observer, observer } from "mobx-react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useStores } from "../hooks/useStores";
 import { RootParamList } from "./ParamList";
 import MainNavigation from "./stacks/main.stack";
 import AuthNavigation from "./stacks/auth.stack";
 import ProjectNavigation from "./stacks/project.stack";
+import { useProfile } from "@/api/get/get.profile";
 
 const AppStackNavigator = createStackNavigator<RootParamList>();
 
@@ -18,8 +19,18 @@ const AppNavigation = () => {
     },
     headerShown: false,
   };
-
+  const { data: dataMe } = useProfile();
   const { authStore } = useStores();
+
+  useEffect(() => {
+    if (dataMe) {
+      // @ts-ignore
+      authStore.setUser({
+        ...authStore.user,
+        ...dataMe,
+      });
+    }
+  }, [dataMe]);
 
   const screensToUse = useMemo(() => {
     if (!authStore?.user) {

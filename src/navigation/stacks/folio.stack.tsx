@@ -1,17 +1,17 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import routes from "../routes";
+import { FolioParamList } from "../ParamList";
 import FolioScreen, {
   screenOptions as FolioScreenOptions,
 } from "@/screens/FolioStack/FolioScreen";
-import { AuthParamList } from "../ParamList";
 
-const FolioStackNavigator = createStackNavigator<AuthParamList>();
+const FolioStackNavigator = createStackNavigator<FolioParamList>();
 
-const FolioNavigation = () => {
+const FolioNavigator = () => {
   return (
     <FolioStackNavigator.Navigator>
       <FolioStackNavigator.Screen
-        name={routes.folio.value}
+        name={routes.profile.value}
         component={FolioScreen}
         options={FolioScreenOptions}
       />
@@ -19,4 +19,4 @@ const FolioNavigation = () => {
   );
 };
 
-export default FolioNavigation;
+export default FolioNavigator;

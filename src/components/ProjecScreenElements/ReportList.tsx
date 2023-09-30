@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import { Hourly } from "@/interfaces/report";
 import { checkValidArray } from "@/utils";
 import { ListRenderItem } from "react-native";
-import { useGetReportProject } from "@/api/report";
+import { useGetReportProject } from "@/api/get/get.projects.report";
 import { format } from "date-fns";
 import ReportDetailItem from "./ReportDetail";
 

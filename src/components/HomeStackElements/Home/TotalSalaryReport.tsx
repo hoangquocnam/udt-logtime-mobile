@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { ProjectDetail } from "@/interfaces/project";
 import { formatCash, formatDecimal } from "@/utils";
-import { useGetReportProject } from "@/api/report";
+import { useGetReportProject } from "@/api/get/get.projects.report";
 import { format } from "date-fns";
 import { DARK_BLUE, SEMI_DARK_BLUE, SUCCESS, WARNING } from "@/theme/colors";
 import { useEffect, useState } from "react";

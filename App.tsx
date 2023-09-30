@@ -3,43 +3,15 @@ import { StatusBar } from "expo-status-bar";
 import { ToastProvider } from "./src/context/toast.context";
 import BottomToast from "./src/components/UI/BottomToast";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { NativeBaseProvider, extendTheme } from "native-base";
+import { NativeBaseProvider } from "native-base";
 import { useFonts } from "expo-font";
 import { Provider as MobxProvider } from "mobx-react";
-import { DARK_BLUE, LIGHT_BLUE, SEMI_DARK_BLUE } from "./src/theme/colors";
+import { DARK_BLUE } from "./src/theme/colors";
 import { rootStore } from "./src/store";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { theme } from "@/theme";
 
 const queryClient = new QueryClient();
-
-const theme = extendTheme({
-  fonts: {
-    heading: "Satoshi",
-    body: "Satoshi",
-    mono: "Satoshi",
-    customFont: "Satoshi",
-  },
-  components: {
-    Button: {
-      baseStyle: {
-        _pressed: {
-          opacity: 0.8,
-          backgroundColor: "primary.500",
-        },
-      },
-      defaultProps: {
-        colorScheme: "primary",
-      },
-    },
-  },
-  colors: {
-    blue: {
-      50: LIGHT_BLUE,
-      100: DARK_BLUE,
-      200: SEMI_DARK_BLUE,
-    },
-  },
-});
 
 const customFonts = {
   Satoshi: require("./src/assets/fonts/Satoshi-Black.otf"),

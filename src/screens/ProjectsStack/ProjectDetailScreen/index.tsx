@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box, HStack, Image, ScrollView, Text, VStack } from "native-base";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ProjectParamList } from "@/navigation/ParamList";
-import { useGetReportProject } from "@/api/report";
+import { useGetReportProject } from "@/api/get/get.projects.report";
 import { format } from "date-fns";
 import { BACKGROUND, DARK_BLUE } from "@/theme/colors";
 import {
@@ -18,7 +18,7 @@ import { getImageUrl } from "@/utils";
 import PriceBox from "@/components/ProjecScreenElements/PriceBox";
 import TimeBox from "@/components/ProjecScreenElements/TimeBox";
 import ProjectReportDetailForm from "@/components/ProjecScreenElements/ProjectDetailForm";
-import { useGetProject } from "@/api/projects";
+import { useGetProject } from "@/api/get/get.projects.one";
 import ReportList from "@/components/ProjecScreenElements/ReportList";
 import { StackNavigationOptions } from "@react-navigation/stack";
 import { deviceHeight } from "@/constants";

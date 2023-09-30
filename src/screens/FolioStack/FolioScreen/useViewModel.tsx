@@ -1,15 +1,19 @@
-import { useDashBoard } from "@/api/folio/get.folio.dashboard";
+import { useDashBoard } from "@/api/get/get.profile.dashboard";
 import { getValidArray } from "@/utils";
 import React, { useMemo, useState } from "react";
 import { DARK_BLUE, YELLOW } from "@/theme/colors";
 import { EPeriods } from "@/components/HomeStackElements/Home/PeriodSelector";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 import { EChartType } from "@/enums";
-import { useGetProjects } from "@/api/projects";
+import { useGetProjects } from "@/api/get/get.projects.many";
+import { useMe } from "@/api/get/get.auth.me";
 
 const useViewModel = () => {
   const [period, setPeriod] = React.useState(EPeriods.MONTH);
   const [selectedDate, setSelectedDate] = useState(new Date());
+const {} = useMe({
+    enabled: true,
+  });
   const {
     data: dataDashBoard,
     refetch: refetchDashboard,

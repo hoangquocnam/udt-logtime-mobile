@@ -139,7 +139,7 @@ export type DeveloperOnProjectData = {
 
 export const getDashBoard = async (period: EPeriods, date?: Date) => {
   const response = await get<TDashBoardResult>(
-    router.folio.dashboard.value(
+    router.profile.dashboard.value(
       period,
       moment(date ?? undefined).format("DD-MM-YYYY")
     ),
@@ -161,7 +161,7 @@ export const useDashBoard = (period: EPeriods, date?: Date) => {
     any
   >(
     [
-      router.folio.dashboard.value(
+      router.profile.dashboard.value(
         period,
         moment(date ?? undefined).format("DD-MM-YYYY")
       ),

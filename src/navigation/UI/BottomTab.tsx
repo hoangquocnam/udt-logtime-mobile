@@ -47,20 +47,15 @@ const CustomBottomTab = ({ state, descriptors, navigation }) => {
             iconName = "home";
             label = "Home";
             break;
-          case "Search":
-            iconName = "hashtag";
-            iconType = "fontawesome";
-            label = "Explore";
-            break;
-          case "Wallet":
-            iconName = "wallet";
-            iconType = "fontawesome";
-            label = "Wallet";
-            break;
           case routes.main.folio:
+            iconType = "entypo";
+            iconName = "line-graph";
+            label = "Folio";
+            break;
+          case routes.main.profile:
             iconType = "feather";
             iconName = "user";
-            label = "Folio";
+            label = "Profile";
             break;
           default:
             break;

@@ -37,10 +37,14 @@ export const router = {
       value: (id: string) => `${API_URL}/projects/detail-of-user/${id}`,
     },
   },
-  folio: {
+  profile: {
     dashboard: {
       value: (period: string, date?: string) =>
         `${API_URL_V2}/users/dashboard?period=${period}&date=${date}`,
+    },
+    profile: {
+      // /v2/v1/users/profile/detail
+      value: `${API_URL_V2}/users/profile/detail`,
     },
   },
 };

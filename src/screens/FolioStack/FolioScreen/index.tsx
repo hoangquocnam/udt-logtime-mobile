@@ -18,9 +18,9 @@ import { ListRenderItem, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useViewModel from "./useViewModel";
 import t from "@/theme";
-import FolioChart from "@/components/FolioStackElements/DataChart";
+import ProfileChart from "@/components/FolioScreenElements/DataChart";
 import { ProjectDetail } from "@/interfaces/project";
-import ProjectFolioTotalListItem from "@/components/FolioStackElements/ProjectFolioTotalListItem";
+import ProjectProfileTotalListItem from "@/components/ProfileStackElements/ProjectProfileTotalListItem";
 
 const FolioScreen = () => {
   const {
@@ -38,7 +38,7 @@ const FolioScreen = () => {
   } = useViewModel();
 
   const renderItem: ListRenderItem<ProjectDetail> = ({ item }) => (
-    <ProjectFolioTotalListItem
+    <ProjectProfileTotalListItem
       item={item}
       period={period}
       date={selectedDate}
@@ -54,29 +54,17 @@ const FolioScreen = () => {
     <SafeAreaView
       style={{
         flex: 1,
+        backgroundColor: "#1e293b",
       }}
       edges={["top"]}
     >
-      <ScrollView
-        flex={1}
-        h={"100%"}
-        bg={BACKGROUND}
-        pt={1}
-        refreshControl={
-          <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />
-        }
-      >
+      <ScrollView flex={1} h={"100%"} bg={BACKGROUND}>
         <VStack
-          px={5}
           space={6}
           justifyContent="center"
           divider={<Box h={0.5} bg={LIGHT_BLUE} />}
         >
           <VStack space={5}>
-            <Text fontSize={24} fontWeight={"bold"} color={DARK_BLUE}>
-              Folio
-            </Text>
-
             <Box
               justifyContent="space-around"
               backgroundColor={BACKGROUND}
@@ -96,7 +84,7 @@ const FolioScreen = () => {
               data={[EChartType.TIME, EChartType.SALARY]}
             />
 
-            <FolioChart data={chartPerformanceData} />
+            <ProfileChart data={chartPerformanceData} />
 
             <FlatList
               data={chartPerformanceData?.legend}

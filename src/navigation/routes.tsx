@@ -1,6 +1,6 @@
 import {
   AuthParamList,
-  FolioParamList,
+  ProfileParamList,
   MainParamList,
   ProjectParamList,
   RootParamList,
@@ -12,7 +12,7 @@ type KeyOfMainParamList = KeyOf<MainParamList>;
 type KeyOfProjectParamList = KeyOf<ProjectParamList>;
 type KeyOfAuthParamList = KeyOf<AuthParamList>;
 type KeyOfRootParamList = KeyOf<RootParamList>;
-type keyOfFolioParamList = KeyOf<FolioParamList>;
+type keyOfProfileParamList = KeyOf<ProfileParamList>;
 
 const routes = {
   root: {
@@ -24,6 +24,7 @@ const routes = {
   main: {
     value: "Main",
     home: "Home" as KeyOfMainParamList,
+    profile: "ProfileStack" as KeyOfMainParamList,
     folio: "FolioStack" as KeyOfMainParamList,
   },
   project: {
@@ -35,8 +36,8 @@ const routes = {
     value: "Auth",
     login: "Login" as KeyOfAuthParamList,
   },
-  folio: {
-    value: "Folio" as keyOfFolioParamList,
+  profile: {
+    value: "Profile" as keyOfProfileParamList,
   },
 };
 

@@ -7,7 +7,7 @@ import { LineChart } from "react-native-chart-kit";
 import { Text as SVGText } from "react-native-svg";
 import { ChartData } from "react-native-chart-kit/dist/HelperTypes";
 
-export type FolioChartProps = {
+export type ProfileChartProps = {
   data: {
     data: ChartData;
     legend: {
@@ -17,7 +17,7 @@ export type FolioChartProps = {
   } | null;
 };
 
-const FolioChart = ({ data }: FolioChartProps) => {
+const ProfileChart = ({ data }: ProfileChartProps) => {
   return (
     <VStack space={4} alignItems="center" justifyContent="center">
       {data?.data ? (
@@ -64,7 +64,7 @@ const FolioChart = ({ data }: FolioChartProps) => {
   );
 };
 
-export default FolioChart;
+export default ProfileChart;
 
 export const screenOptions: StackNavigationOptions = {
   headerShown: false,

@@ -12,12 +12,12 @@ import { Avatar, HStack, Text } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MainParamList, MainParamListNavigationProps } from "../ParamList";
 import CustomBottomTab from "../UI/BottomTab";
-import FolioNavigation from "./folio.stack";
+import ProfileNavigator from "./profile.stack";
+import FolioNavigator from "./folio.stack";
 
 const BottomTabNavigator = createBottomTabNavigator<MainParamList>();
 
 const MainNavigation = () => {
-  const navigation = useNavigation<MainParamListNavigationProps>();
   const storage = LocalStorage.getInstance();
   const { authStore } = useStores();
 
@@ -77,7 +77,11 @@ const MainNavigation = () => {
       />
       <BottomTabNavigator.Screen
         name={routes.main.folio}
-        component={FolioNavigation}
+        component={FolioNavigator}
+      />
+      <BottomTabNavigator.Screen
+        name={routes.main.profile}
+        component={ProfileNavigator}
       />
     </BottomTabNavigator.Navigator>
   );

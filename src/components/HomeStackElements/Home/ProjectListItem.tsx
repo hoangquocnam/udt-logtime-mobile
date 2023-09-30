@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native";
 import { ProjectDetail } from "@/interfaces/project";
 import { formatCash, getImageUrl, formatDecimal } from "@/utils";
-import { useGetReportProject } from "@/api/report";
+import { useGetReportProject } from "@/api/get/get.projects.report";
 import { format } from "date-fns";
 import { DARK_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
 import { Box, HStack, Image, Spinner, Text, VStack } from "native-base";
@@ -62,7 +62,7 @@ const ProjectListItem = ({ item, period, date }: Props) => {
           </Box>
         ) : (
           <>
-            <HStack flexDir={"row"} alignItems={"center"} space={3} w={"70%"}>
+            <HStack flexDir={"row"} alignItems={"center"} space={3} flex={1}>
               <Image
                 source={{ uri: getImageUrl(item?.logo) }}
                 size={63}
@@ -87,13 +87,12 @@ const ProjectListItem = ({ item, period, date }: Props) => {
               </VStack>
             </HStack>
 
-            <HStack w={"20%"} alignItems={"center"}>
+            <HStack  alignItems={"center"}>
               <Text
                 fontSize={14}
                 fontWeight={"bold"}
                 ml={3}
                 color={DARK_BLUE}
-                flex={1}
               >
                 {formatDecimal(
                   dataReportProject?.reportDetail?.totalWorkingTime ?? 0

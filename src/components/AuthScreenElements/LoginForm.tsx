@@ -9,7 +9,7 @@ import { PasswordInput } from "../UI/PasswordInput";
 import { NormalTextInput } from "../UI/TextInput";
 import useToast from "@/hooks/useToast";
 import { IUserLogin } from "@/interfaces/user";
-import { useMe, usePostLogin, usePostLoginV2 } from "@/api/auth";
+import { useMe, usePostLogin, usePostLoginV2 } from "@/api/get/get.auth.me";
 import LocalStorage from "@/store/localStorage";
 import { Button, Text, VStack } from "native-base";
 import { useStores } from "@/hooks/useStores";

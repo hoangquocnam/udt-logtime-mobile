@@ -7,7 +7,7 @@ import {
   View,
   RefreshControl,
 } from "react-native";
-import { useGetProjects } from "@/api/projects";
+import { useGetProjects } from "@/api/get/get.projects.many";
 import { ProjectDetail } from "@/interfaces/project";
 import TotalSalaryReport from "@/components/HomeStackElements/Home/TotalSalaryReport";
 import t from "@/theme";

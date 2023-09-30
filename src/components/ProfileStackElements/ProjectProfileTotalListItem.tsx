@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { TouchableOpacity, View } from "react-native";
 import { ProjectDetail } from "@/interfaces/project";
 import { formatCash, getImageUrl, formatDecimal } from "@/utils";
-import { useGetReportProject } from "@/api/report";
+import { useGetReportProject } from "@/api/get/get.projects.report";
 import { format } from "date-fns";
 import { DARK_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
 import { Box, HStack, Image, Spinner, Text, VStack } from "native-base";
@@ -12,7 +12,6 @@ import {
   RootParamListNavigationProps,
 } from "@/navigation/ParamList";
 import routes from "@/navigation/routes";
-import t from "@/theme";
 
 type Props = {
   item: ProjectDetail;
@@ -24,7 +23,7 @@ type Props = {
   };
 };
 
-const ProjectFolioTotalListItem = ({ item, period, date, total }: Props) => {
+const ProjectProfileTotalListItem = ({ item, period, date, total }: Props) => {
   const navigation = useNavigation<
     RootParamListNavigationProps & ProjectParamListNavigationProps
   >();
@@ -196,4 +195,4 @@ const ProjectFolioTotalListItem = ({ item, period, date, total }: Props) => {
   );
 };
 
-export default ProjectFolioTotalListItem;
+export default ProjectProfileTotalListItem;

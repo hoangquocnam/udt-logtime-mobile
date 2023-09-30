@@ -1,9 +1,11 @@
 import { makeAutoObservable } from "mobx";
-import { IUserState } from "../interfaces/user";
+import { IUserRefreshToken, IUserProfile } from "../interfaces/user";
 import { makePersistable } from "mobx-persist-store";
 
+export type IUser = IUserRefreshToken & IUserProfile;
+
 class AuthStore {
-  user: IUserState | null = null;
+  user: IUser | null = null;
   accessToken: string | null = null;
   rootStore: any;
 
@@ -16,7 +18,7 @@ class AuthStore {
     });
   }
 
-  setUser(user: IUserState | null) {
+  setUser(user: IUser | null) {
     this.user = user;
   }
 }
