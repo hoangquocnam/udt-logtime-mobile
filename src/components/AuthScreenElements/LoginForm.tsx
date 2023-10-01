@@ -14,6 +14,7 @@ import LocalStorage from "@/store/localStorage";
 import { Button, Text, VStack } from "native-base";
 import { useStores } from "@/hooks/useStores";
 import { useProfile } from "@/api/get/get.profile";
+import { observer } from "mobx-react";
 
 const schema = yup
   .object({
@@ -70,8 +71,7 @@ const LoginForm = () => {
   } = method;
 
   const handleLogin = async (payload: IUserLogin) => {
-    await loginV1(payload);
-    await loginV2(payload);
+    Promise.all([loginV1(payload), loginV2(payload)]);
   };
 
   useEffect(() => {
@@ -81,8 +81,6 @@ const LoginForm = () => {
         await storage.setItem("aToken", dataLoginV1?.user?.aToken);
         await storage.setItem("rToken", dataLoginV1?.user?.rToken);
         setTrigger(true);
-        show({ message: "Login success!" });
-        authStore.setUser(dataLoginV1?.user);
       }
     };
 
@@ -102,6 +100,7 @@ const LoginForm = () => {
     if (me && dataProfile) {
       // @ts-ignore
       authStore.setUser({ ...me?.user, ...dataProfile });
+      show({ message: "Login success!" });
     }
   }, [me, dataProfile]);
 
@@ -162,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginForm;
+export default observer(LoginForm);

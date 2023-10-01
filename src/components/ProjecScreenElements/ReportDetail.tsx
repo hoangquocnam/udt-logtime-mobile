@@ -7,8 +7,15 @@ import { format } from "date-fns";
 import { DARK_BLUE } from "@/theme/colors";
 
 const ReportDetailItem = (props: Hourly) => {
-  const { taskName, workingTime, description, startTime, endTime, salary } =
-    props;
+  const {
+    taskName,
+    workingTime,
+    description,
+    startTime,
+    endTime,
+    salary,
+    _id,
+  } = props;
   const [isShowDescription, setIsShowDescription] = useState(false);
   return (
     <TouchableOpacity onPress={() => setIsShowDescription(!isShowDescription)}>
@@ -20,9 +27,9 @@ const ReportDetailItem = (props: Hourly) => {
             </Text>
           </VStack>
 
-          <Box alignItems="flex-end" w={10}>
+          <Box alignItems="flex-end">
             <Text color={"darkBlue.700"} fontSize={18}>
-              {workingTime}
+              {workingTime?.toFixed(2)}
             </Text>
           </Box>
         </HStack>

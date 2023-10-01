@@ -7,6 +7,7 @@ import { TouchableNativeFeedback, View } from "react-native";
 import t from "@/theme";
 import { format } from "date-fns";
 import { Box } from "native-base";
+import { fonts } from "@/theme/fonts";
 
 type PeriodSelectorProps = {
   onChange: (value: string) => void;
@@ -80,7 +81,7 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
             fontWeight: "bold",
             flex: 1,
             color: LIGHT_BLUE,
-            fontFamily: "Satoshi",
+            fontFamily: fonts.regular,
           }}
           rowStyle={{
             backgroundColor: "white",
@@ -89,7 +90,7 @@ const PeriodSelector = (props: PeriodSelectorProps) => {
             textTransform: "capitalize",
             fontWeight: "bold",
             fontSize: 14,
-            fontFamily: "Satoshi",
+            fontFamily: fonts.regular,
           }}
           selectedRowStyle={{
             backgroundColor: LIGHT_BLUE,

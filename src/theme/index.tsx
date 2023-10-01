@@ -42,11 +42,10 @@ export const theme = extendTheme({
       baseStyle: {
         _pressed: {
           opacity: 0.8,
-          backgroundColor: "primary.500",
         },
       },
       defaultProps: {
-        colorScheme: "primary",
+        colorScheme: "blueGray",
       },
     },
     Text: {
@@ -56,12 +55,26 @@ export const theme = extendTheme({
         },
       },
     },
+    Pressable: {
+      defaultProps: {
+        _pressed: {
+          opacity: 0.8,
+        },
+      },
+    },
+    FlatList: {
+      baseStyle: {
+        showsVerticalScrollIndicator: false,
+        showsHorizontalScrollIndicator: false,
+      },
+    },
   },
   colors: {
-    blue: {
-      50: LIGHT_BLUE,
-      100: DARK_BLUE,
-      200: SEMI_DARK_BLUE,
+    blueGray: {
+      800: DARK_BLUE,
+    },
+    lightBlue: {
+      500: LIGHT_BLUE,
     },
   },
 });

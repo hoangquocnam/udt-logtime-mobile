@@ -19,19 +19,16 @@ export const router = {
       value: `${API_URL_V2}/auth/login`,
     },
   },
-  reports: {
-    value: `${API_URL}/report-timesheet`,
+  project: {
     report: {
-      value: `${API_URL}/report-timesheet/report`,
       detail: {
         value: `${API_URL}/report-timesheet/report/detail`,
       },
     },
   },
   projects: {
-    value: `${API_URL}/projects`,
     listOfUser: {
-      value: `${API_URL}/projects/list-of-user`,
+      value: `${API_URL_V2}/projects/list-of-user`,
     },
     detail: {
       value: (id: string) => `${API_URL}/projects/detail-of-user/${id}`,
@@ -45,6 +42,11 @@ export const router = {
     profile: {
       // /v2/v1/users/profile/detail
       value: `${API_URL_V2}/users/profile/detail`,
+    },
+  },
+  timesheet: {
+    list: {
+      value: `${API_URL_V2}/timesheet/list`,
     },
   },
 };

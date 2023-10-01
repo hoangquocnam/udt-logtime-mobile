@@ -220,3 +220,16 @@ export const removeAsyncStorageWith: (
     return false;
   }
 };
+
+export const getTimeFrames = () => {
+  const TimeFrames: string[] = [];
+  const startTime = moment("00:00", "HH:mm");
+  const endTime = moment("24:00", "HH:mm");
+
+  while (startTime.isBefore(endTime)) {
+    TimeFrames.push(startTime.format("HH:mm"));
+    startTime.add(30, "minutes");
+  }
+
+  return TimeFrames;
+};

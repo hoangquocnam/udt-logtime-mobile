@@ -4,6 +4,7 @@ export type RootParamList = {
   Auth: undefined;
   Main: undefined;
   Project: undefined;
+  Report: undefined;
 };
 
 export type RootParamListNavigationProps =
@@ -49,3 +50,10 @@ export type FolioParamList = {
 
 export type FolioParamListNavigationProps =
   NativeStackNavigationProp<FolioParamList>;
+
+export type ReportParamList = {
+  CreateReportScreen: undefined;
+};
+
+export type ReportParamListNavigationProps =
+  NativeStackNavigationProp<ReportParamList>;

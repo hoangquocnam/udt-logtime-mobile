@@ -7,6 +7,9 @@ import { DARK_BLUE, SEMI_DARK_BLUE, SUCCESS, WARNING } from "@/theme/colors";
 import { useEffect, useState } from "react";
 import { Box, Button, HStack, Spinner, Stack, Text, VStack } from "native-base";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { RootParamListNavigationProps } from "@/navigation/ParamList";
+import routes from "@/navigation/routes";
 
 type Props = {
   projects: ProjectDetail[];
@@ -20,6 +23,7 @@ const TotalSalaryReport = ({ projects, period, date, isRefresh }: Props) => {
   const [totalSalary, setTotalSalary] = useState(0);
   const [totalWorkingTime, setTotalWorkingTime] = useState(0);
   const [isShowSalary, setIsShowSalary] = useState(true);
+  const navigation = useNavigation<RootParamListNavigationProps>();
 
   const getTotal = async () => {
     const promises = projects?.map((project) =>
@@ -110,7 +114,11 @@ const TotalSalaryReport = ({ projects, period, date, isRefresh }: Props) => {
               flex={1}
               borderRadius={14}
               flexDir={"row"}
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate(routes.root.report, {
+                  screen: routes.report.create,
+                });
+              }}
             >
               <HStack space={4} flex={1} py={3} alignItems={"center"}>
                 <Text color={"white"} fontSize={16} fontWeight={"600"}>

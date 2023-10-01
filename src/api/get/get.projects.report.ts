@@ -23,7 +23,7 @@ const getReportProject = async (
       data: DataReportTimesheet;
     },
     BodyReportTimesheet
-  >(router.reports.report.detail.value, body);
+  >(router.project.report.detail.value, body);
   if (response.error || response?.message) {
     throw new Error(response.error || response?.message);
   }

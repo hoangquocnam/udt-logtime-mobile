@@ -137,7 +137,11 @@ export default ProjectDetailScreen;
 export const screenOptions: StackNavigationOptions = {
   headerShown: true,
   title: "",
-  headerBackImage: () => <BackIcon />,
+  headerBackImage: () => (
+    <Box ml={2}>
+      <BackIcon />
+    </Box>
+  ),
   headerBackTitle: "",
   headerStyle: {
     backgroundColor: BACKGROUND,
@@ -148,7 +152,6 @@ export const screenOptions: StackNavigationOptions = {
   headerTitleAlign: "center",
   headerTitleStyle: {
     color: DARK_BLUE,
-    fontFamily: "Satoshi",
     fontWeight: "600",
   },
 };

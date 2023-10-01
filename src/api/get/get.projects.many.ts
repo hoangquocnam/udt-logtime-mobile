@@ -9,7 +9,10 @@ type DataProjects = {
 
 const getProjects = async (): Promise<DataProjects> => {
   const response = await get<{ data: DataProjects }>(
-    router.projects.listOfUser.value
+    router.projects.listOfUser.value,
+    {
+      v2: true,
+    }
   );
   if (response.error) {
     throw new Error(response.error);

@@ -4,6 +4,7 @@ import WheelPicker from "react-native-wheely";
 import moment from "moment";
 import t from "@/theme";
 import { LIGHT_BLUE, SEMI_DARK_BLUE } from "@/theme/colors";
+import { fonts } from "@/theme/fonts";
 
 type FormDateTimePickerProps = {
   onChange?: (date: Date) => void;
@@ -178,7 +179,7 @@ const useStyles = () => {
       borderWidth: 1,
     },
     itemTextStyle: {
-      fontFamily: "Satoshi",
+      fontFamily: fonts.regular,
       fontWeight: "bold",
     },
     firstColumnStyle: {

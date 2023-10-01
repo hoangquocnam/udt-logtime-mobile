@@ -7,8 +7,7 @@ import { ProjectDetail } from "@/interfaces/project";
 
 type Props = {
   reportDetail?: ReportDetail;
-  projectDetail?: ProjectDetail;
-};
+  projectDetail?: ProjectDetail;};
 
 type ReportDetailItemProps = {
   label: string;
@@ -51,7 +50,7 @@ const ProjectReportDetailForm = ({ reportDetail, projectDetail }: Props) => {
         label="Committed Hours"
         value={
           neededDeveloperNumber !== 0
-            ? commitedHours / neededDeveloperNumber
+            ? (commitedHours / neededDeveloperNumber)?.toFixed(2)
             : 0
         }
       />

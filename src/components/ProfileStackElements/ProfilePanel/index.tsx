@@ -1,12 +1,11 @@
 import { useStores } from "@/hooks/useStores";
-import { IUserRefreshToken } from "@/interfaces/user";
 import { hp, wp } from "@/theme";
 import { getImageUrl } from "@/utils";
 import { observer } from "mobx-react";
 import { Box, Image, Text, VStack, HStack, Menu, Pressable } from "native-base";
 import React from "react";
 import { toCapitalizeFirstLetter } from "@/utils";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { fonts } from "@/theme/fonts";
 
@@ -71,12 +70,22 @@ const ProfilePanel = (props: ProfilePanelProps) => {
               <Menu.Item
                 key={index}
                 onPress={item.onPress}
-                _text={{
-                  fontSize: 14,
-                  fontWeight: "bold",
+                _pressed={{
+                  bg: "white",
+                  opacity: 0.5,
                 }}
               >
-                {item.title}
+                <HStack>
+                  <MaterialIcons name={"logout"} size={20} />
+                  <Text
+                    ml={2}
+                    color={"black"}
+                    fontSize={14}
+                    fontWeight={"bold"}
+                  >
+                    {item.title}
+                  </Text>
+                </HStack>
               </Menu.Item>
             ))}
           </Menu>
@@ -88,6 +97,8 @@ const ProfilePanel = (props: ProfilePanelProps) => {
           size={wp(120)}
           alt={`Avatar ${user?.fullName}`}
           borderRadius={wp(60)}
+          borderWidth={1}
+          borderColor="gray.300"
         />
         <VStack
           w={"100%"}

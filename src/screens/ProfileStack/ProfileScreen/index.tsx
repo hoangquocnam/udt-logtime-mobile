@@ -1,4 +1,4 @@
-import { BACKGROUND, LIGHT_BLUE } from "@/theme/colors";
+import { BACKGROUND, DARK_BLUE, LIGHT_BLUE } from "@/theme/colors";
 import { StackNavigationOptions } from "@react-navigation/stack";
 import {
   VStack,
@@ -14,7 +14,7 @@ const ProfileScreen = () => {
     <SafeAreaView
       style={{
         flex: 1,
-        backgroundColor: "#1e293b",
+        backgroundColor: DARK_BLUE
       }}
       edges={["top"]}
     >
